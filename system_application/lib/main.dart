@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'user_verification.dart';
 import 'home.dart';
 import 'profile_settings/theme_notifier.dart';
+import 'profile_settings/name_notifier.dart';         // ← new import
 import 'profile_settings/notification_service.dart';
 import 'detection/inference_service.dart';
 
@@ -36,8 +37,16 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> loadUser() async {
     final prefs = await SharedPreferences.getInstance();
+    final savedName = prefs.getString('username');
+
+    // ── Initialize nameNotifier so home.dart has the correct name
+    //    from the very first frame, even before any profile change.
+    if (savedName != null) {
+      nameNotifier.value = savedName;
+    }
+
     setState(() {
-      name      = prefs.getString('username');
+      name      = savedName;
       isLoading = false;
     });
   }

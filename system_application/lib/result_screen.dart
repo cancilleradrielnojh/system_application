@@ -415,16 +415,16 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
                   Text(
-                    'Confidence score: ${(r.confidence * 100).toStringAsFixed(1)}%',
+                    'Confidence Score : ${(r.confidence * 100).toStringAsFixed(1)}%',
                     style: TextStyle(
                       fontSize: 12,
                       color: color.withValues(alpha: 0.85),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 4),
                   const Text(
                     'Recommended actions',
                     style:
@@ -605,8 +605,8 @@ class _ScanImageWithBboxesState extends State<_ScanImageWithBboxes> {
         math.max(oy1, oy2),
       );
 
-      final label = d.className;
-      return _MappedBox(rect: rect, label: label);
+      final label = '${d.className}  ${(d.confidence * 100).toStringAsFixed(1)}%';
+      return _MappedBox(rect: rect, label: label, confidence: d.confidence);
     }).toList();
 
     return LayoutBuilder(
@@ -650,7 +650,8 @@ class _ScanImageWithBboxesState extends State<_ScanImageWithBboxes> {
 class _MappedBox {
   final Rect rect;
   final String label;
-  _MappedBox({required this.rect, required this.label});
+  final double confidence;
+  _MappedBox({required this.rect, required this.label, required this.confidence});
 }
 
 class _BboxesOverlayPainter extends CustomPainter {

@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'name_notifier.dart';                            // ← new import
+
 class ProfileSettingsScreen extends StatefulWidget {
   final String currentName;
   const ProfileSettingsScreen({super.key, required this.currentName});
@@ -57,6 +59,11 @@ class _ProfileSettingsScreenState
     await prefs.setString(
         'farmName', farmNameController.text.trim());
 
+    // ── Notify all listeners (home.dart greeting) of the new name.
+    //    This fires instantly — home.dart updates before the user
+    //    even navigates back to the Home tab.
+    nameNotifier.value = name;
+
     setState(() => isSaving = false);
 
     if (!mounted) return;
@@ -69,43 +76,6 @@ class _ProfileSettingsScreenState
     );
 
     Navigator.pop(context, name);
-  }
-
-  Future<void> confirmClearData() async {
-    final confirm = await showDialog<bool>(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Clear All Data'),
-        content: const Text(
-            'This will delete all your scan history and scan statistics. '
-            'Your profile name and settings will be kept. '
-            'This cannot be undone.'),
-        actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(context, false),
-              child: const Text('Cancel')),
-          TextButton(
-              onPressed: () => Navigator.pop(context, true),
-              child: const Text('Clear',
-                  style: TextStyle(color: Colors.red))),
-        ],
-      ),
-    );
-
-    if (confirm == true) {
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('history');
-      await prefs.remove('scansToday');
-      await prefs.remove('avgHealth');
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Scan history cleared. Profile is unchanged.'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      Navigator.pop(context, '');
-    }
   }
 
   @override
@@ -181,28 +151,7 @@ class _ProfileSettingsScreenState
                     borderRadius: BorderRadius.circular(12)),
               ),
             ),
-            const SizedBox(height: 28),
-            const Divider(),
-            const SizedBox(height: 12),
-            const Text('Danger Zone',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red)),
-            const SizedBox(height: 12),
-            OutlinedButton.icon(
-              onPressed: confirmClearData,
-              icon: const Icon(Icons.delete_forever,
-                  color: Colors.red),
-              label: const Text('Clear All App Data',
-                  style: TextStyle(color: Colors.red)),
-              style: OutlinedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 52),
-                side: const BorderSide(color: Colors.red),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-              ),
-            ),
+
           ],
         ),
       ),
