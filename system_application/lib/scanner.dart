@@ -3,8 +3,11 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'result_screen.dart';
 import 'detection/inference_service.dart';
+import 'theme/app_theme.dart';
+import 'theme/app_widgets.dart';
 
 class ScannerScreen extends StatefulWidget {
   final Function(
@@ -44,8 +47,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
       );
       controller = CameraController(
         back,
-        ResolutionPreset.medium,
+        ResolutionPreset.high,
         enableAudio: false,
+        imageFormatGroup: ImageFormatGroup.jpeg,
       );
       await controller!.initialize();
       if (!mounted) return;
@@ -119,6 +123,54 @@ class _ScannerScreenState extends State<ScannerScreen> {
     }
   }
 
+  /// Fill the screen like a stock camera: crop if needed, never stretch.
+  Widget _buildCameraPreview() {
+    final cam = controller!;
+    if (!cam.value.isInitialized) {
+      return const SizedBox.shrink();
+    }
+
+    final preview = cam.value.previewSize;
+    if (preview == null) {
+      return CameraPreview(cam);
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // previewSize is landscape (sensor). Swap for portrait display.
+        final previewW = preview.height;
+        final previewH = preview.width;
+        final screenW = constraints.maxWidth;
+        final screenH = constraints.maxHeight;
+        final screenAspect = screenW / screenH;
+        final previewAspect = previewW / previewH;
+
+        double drawW = screenW;
+        double drawH = screenH;
+        if (screenAspect > previewAspect) {
+          drawW = screenW;
+          drawH = screenW / previewAspect;
+        } else {
+          drawH = screenH;
+          drawW = screenH * previewAspect;
+        }
+
+        return ClipRect(
+          child: OverflowBox(
+            maxWidth: drawW,
+            maxHeight: drawH,
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: drawW,
+              height: drawH,
+              child: CameraPreview(cam),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Future<void> uploadFromGallery() async {
     if (isProcessing) return;
     setState(() => isProcessing = true);
@@ -138,78 +190,132 @@ class _ScannerScreenState extends State<ScannerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.darkBg,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.black.withValues(alpha: 0.35),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.white24),
+            ),
+            child: const Icon(Icons.arrow_back, color: Colors.white, size: 18),
+          ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text('Scan Sapling',
-            style: TextStyle(color: Colors.white)),
+        title: Text(
+          'SCAN FRAME',
+          style: GoogleFonts.spaceGrotesk(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.4,
+            fontSize: 14,
+          ),
+        ),
+        centerTitle: true,
       ),
       body: Stack(
         children: [
-          // Camera preview
           if (!kIsWeb && isCameraReady)
-            Positioned.fill(child: CameraPreview(controller!)),
+            Positioned.fill(child: _buildCameraPreview()),
 
-          // No-camera fallback
           if (kIsWeb || !isCameraReady)
-            const Positioned.fill(
-              child: Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
+            Positioned.fill(
+              child: Container(
+                color: AppColors.darkBg,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.photo_camera_outlined,
+                          color: AppColors.lime.withValues(alpha: 0.7),
+                          size: 56),
+                      const SizedBox(height: 14),
+                      Text(
+                        'Camera unavailable',
+                        style: GoogleFonts.spaceGrotesk(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        'Upload a leaf photo from your gallery',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.dmSans(
+                          color: AppColors.darkMuted,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+          Positioned.fill(
+            child: IgnorePointer(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    colors: [
+                      Colors.transparent,
+                      Colors.black.withValues(alpha: 0.45),
+                    ],
+                    radius: 0.95,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          if (!kIsWeb && isCameraReady)
+            Center(
+              child: SizedBox(
+                width: 270,
+                height: 270,
+                child: Stack(
                   children: [
-                    Icon(Icons.camera_alt,
-                        color: Colors.white54, size: 60),
-                    SizedBox(height: 12),
-                    Text(
-                      "Camera not available\n"
-                      "Use 'Upload from Gallery' below",
-                      textAlign: TextAlign.center,
-                      style:
-                          TextStyle(color: Colors.white60, fontSize: 16),
+                    CustomPaint(
+                      size: const Size(270, 270),
+                      painter: ScanFramePainter(color: AppColors.lime),
+                    ),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 14),
+                        child: Text(
+                          'Align leaf inside brackets',
+                          style: GoogleFonts.dmSans(
+                            color: Colors.white.withValues(alpha: 0.85),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
 
-          // Scanner frame overlay
-          if (!kIsWeb && isCameraReady)
-            Center(
-              child: Container(
-                width: 260,
-                height: 260,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.green, width: 3),
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: const Align(
-                  alignment: Alignment.topCenter,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 8),
-                    child: Text(
-                      'Position sapling inside',
-                      style: TextStyle(
-                          color: Colors.white70, fontSize: 12),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-          // Bottom buttons
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 40),
-              decoration: const BoxDecoration(
+              padding: const EdgeInsets.fromLTRB(22, 28, 22, 36),
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
-                  colors: [Colors.black, Colors.transparent],
+                  colors: [
+                    AppColors.darkBg,
+                    AppColors.darkBg.withValues(alpha: 0.85),
+                    Colors.transparent,
+                  ],
                 ),
               ),
               child: Column(
@@ -218,37 +324,30 @@ class _ScannerScreenState extends State<ScannerScreen> {
                   if (!kIsWeb)
                     ElevatedButton.icon(
                       onPressed: isProcessing ? null : captureImage,
-                      icon: const Icon(Icons.camera_alt),
-                      label: Text(
-                        isProcessing ? 'Processing…' : 'Capture Image',
-                        style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
+                      icon: Icon(
+                        isProcessing
+                            ? Icons.hourglass_top_rounded
+                            : Icons.camera_alt_rounded,
                       ),
+                      label: Text(isProcessing ? 'Processing…' : 'Capture'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
-                        minimumSize: const Size(double.infinity, 55),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12)),
+                        backgroundColor: AppColors.lime,
+                        foregroundColor: AppColors.ink,
+                        disabledBackgroundColor:
+                            AppColors.lime.withValues(alpha: 0.4),
                       ),
                     ),
                   if (!kIsWeb) const SizedBox(height: 12),
                   OutlinedButton.icon(
                     onPressed: isProcessing ? null : uploadFromGallery,
-                    icon: const Icon(Icons.photo_library),
-                    label: const Text(
-                      'Upload from Gallery',
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    icon: const Icon(Icons.photo_library_outlined),
+                    label: const Text('Upload from gallery'),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
-                      minimumSize: const Size(double.infinity, 55),
-                      side: const BorderSide(
-                          color: Colors.white, width: 1.5),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
+                      side: BorderSide(
+                        color: Colors.white.withValues(alpha: 0.55),
+                        width: 1.4,
+                      ),
                     ),
                   ),
                 ],

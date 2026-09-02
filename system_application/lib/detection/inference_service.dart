@@ -7,13 +7,46 @@ import 'package:image/image.dart' as img;
 
 enum SaplingClass { healthy, pestDamaged, wilting, yellowing }
 
+/// Full analysis payload: detections + letterbox metadata for accurate overlays.
+class ImageAnalysisResult {
+  final List<DetectionResult> detections;
+
+  /// EXIF-baked source size used by the model (matches [displayBytes]).
+  final int imageWidth;
+  final int imageHeight;
+
+  /// Letterbox params used during preprocess (must match overlay un-letterbox).
+  final double letterboxScale;
+  final double padX;
+  final double padY;
+
+  /// JPEG of the EXIF-corrected image so UI boxes/masks align with pixels.
+  final Uint8List displayBytes;
+
+  /// Pixel size of [displayBytes] (may be downscaled vs [imageWidth]/[imageHeight]).
+  final int displayWidth;
+  final int displayHeight;
+
+  const ImageAnalysisResult({
+    required this.detections,
+    required this.imageWidth,
+    required this.imageHeight,
+    required this.letterboxScale,
+    required this.padX,
+    required this.padY,
+    required this.displayBytes,
+    required this.displayWidth,
+    required this.displayHeight,
+  });
+}
+
 class DetectionResult {
   final SaplingClass? saplingClass;
   final double        confidence;
   final double        boxAreaPx;
   final bool          isCalamansi;
 
-  //Secondary condition when two classes score above threshold.
+  // Secondary condition when two classes score above threshold.
   final SaplingClass? secondaryClass;
   final double?       secondaryConfidence;
 
@@ -22,6 +55,9 @@ class DetectionResult {
   final double? bboxTop;
   final double? bboxRight;
   final double? bboxBottom;
+
+  /// Leaf outline polygon in letterbox space: each point is [x, y].
+  final List<List<double>>? maskPolygon;
 
   DetectionResult({
     required this.saplingClass,
@@ -34,6 +70,7 @@ class DetectionResult {
     this.bboxTop,
     this.bboxRight,
     this.bboxBottom,
+    this.maskPolygon,
   });
 
   /// Input: internal enum value (`saplingClass`).
@@ -94,25 +131,30 @@ class InferenceService {
   static const int inputSize = 640;
 
   // ── Confidence gates ──────────────────────────────────────────────────────
-  static const double confThreshold             = 0.70;
-  static const double calamansiPresenceThreshold = 0.85;
+  static const double confThreshold              = 0.70;
+  /// Final keep gate on class score. Not a true species check 
+  static const double calamansiPresenceThreshold = 0.88;
 
-  //Minimum confidence for a secondary class to be reported.
-  static const double secondaryClassThreshold   = 0.60;
+  // Minimum confidence for a secondary class to be reported.
+  static const double secondaryClassThreshold    = 0.60;
 
-  // ── NMS ───────────────────────────────────────────────────────────────────
-  static const double iouThreshold = 0.60;
+   /// Same-class IoU suppress threshold (lower = keep more nearby leaves).
+  static const double iouThreshold = 0.45;
+  /// Cross-class suppress only when boxes almost completely overlap.
+  static const double crossClassIouThreshold = 0.75;
 
   // ── Box geometry filters ──────────────────────────────────────────────────
   static const double minBoxAreaPx   = 300;
-  static const double maxBoxAreaPx   = 90000;
+  /// Cap oversized boxes that often swallow multiple adjacent leaves.
+  static const double maxBoxAreaPx   = 55000;
   static const double minSidePx      = 10;
   static const double maxSidePx      = 1024;
   static const double maxAspectRatio = 3.0;
 
   // ── Mask gating thresholds ────────────────────────────────────────────────
-  static const double minMaskAreaRatioWithinBbox = 0.05;
-  static const double minMaskMeanWithinBbox      = 0.18;
+  static const double minMaskAreaRatioWithinBbox = 0.12;
+  static const double minMaskMeanWithinBbox      = 0.25;
+  static const double maskBinaryThreshold        = 0.5;
 
   // ── Blur detection ────────────────────────────────────────────────
   static const double blurThreshold = 80.0;
@@ -147,7 +189,7 @@ class InferenceService {
 
   // ── analyzeImage ──────────────────────────────────────────────────────────
 
-  Future<List<DetectionResult>> analyzeImage(String imagePath) async {
+  Future<ImageAnalysisResult> analyzeImage(String imagePath) async {
     if (!_isLoaded || _session == null) {
       throw Exception('Model not loaded. Call loadModel() first.');
     }
@@ -156,14 +198,14 @@ class InferenceService {
     final result = await compute<Map<String, dynamic>, Map<String, dynamic>>(
       _preprocessAndCheckIsolate,
       {
-        'imagePath':    imagePath,
-        'inputSize':    inputSize,
+        'imagePath':     imagePath,
+        'inputSize':     inputSize,
         'blurThreshold': blurThreshold,
       },
     );
 
     final isBlurry     = result['isBlurry']     as bool;
-    final blurVariance = result['blurVariance']  as double;
+    final blurVariance = result['blurVariance'] as double;
 
     if (isBlurry) {
       debugPrint('⚠️  Image too blurry (variance=$blurVariance). Skipping inference.');
@@ -174,6 +216,12 @@ class InferenceService {
     }
 
     final inputData = result['inputData'] as List<double>;
+    final imageWidth = result['imageWidth'] as int;
+    final imageHeight = result['imageHeight'] as int;
+    final letterboxScale = result['letterboxScale'] as double;
+    final padX = result['padX'] as double;
+    final padY = result['padY'] as double;
+    final displayBytes = result['displayBytes'] as Uint8List;
 
     final inputTensor = await OrtValue.fromList(
       Float32List.fromList(inputData),
@@ -190,7 +238,17 @@ class InferenceService {
     if (detValue == null || protoValue == null) {
       debugPrint('❌ Expected output keys "output0"/"output1" not found. '
           'Available keys: ${outputs.keys.toList()}');
-      return const [];
+      return ImageAnalysisResult(
+        detections: const [],
+        imageWidth: imageWidth,
+        imageHeight: imageHeight,
+        letterboxScale: letterboxScale,
+        padX: padX,
+        padY: padY,
+        displayBytes: displayBytes,
+        displayWidth: result['displayWidth'] as int,
+        displayHeight: result['displayHeight'] as int,
+      );
     }
 
     final detShape   = detValue.shape;
@@ -207,7 +265,18 @@ class InferenceService {
       await out.dispose();
     }
 
-    return _decodeOutput(rawDet, detShape, rawProto, protoShape);
+    final detections = _decodeOutput(rawDet, detShape, rawProto, protoShape);
+    return ImageAnalysisResult(
+      detections: detections,
+      imageWidth: imageWidth,
+      imageHeight: imageHeight,
+      letterboxScale: letterboxScale,
+      padX: padX,
+      padY: padY,
+      displayBytes: displayBytes,
+      displayWidth: result['displayWidth'] as int,
+      displayHeight: result['displayHeight'] as int,
+    );
   }
 
   // ── _decodeOutput ─────────────────────────────────────────────────────────
@@ -262,7 +331,7 @@ class InferenceService {
       final double aspectRatio = max(wAbs, hAbs) / min(wAbs, hAbs);
       if (aspectRatio > maxAspectRatio) continue;
 
-      //Track best AND second-best class scores per anchor(not implemented yet in the UI but only in logic)
+      // Track best AND second-best class scores per anchor
       double maxScore  = 0; int maxClass  = 0;
       double sec2Score = 0; int sec2Class = 0;
       for (int c = 0; c < numClasses; c++) {
@@ -302,14 +371,14 @@ class InferenceService {
 
       confPassCount++;
 
-      final bool maskOk = _maskLooksCalamansi(
+      final maskEval = _evaluateMask(
         best:       c,
         rawDet:     rawDet,
         rawProto:   rawProto,
         detShape:   detShape,
         protoShape: protoShape,
       );
-      if (!maskOk) {
+      if (maskEval == null || !maskEval.ok) {
         maskFailCount++;
         continue;
       }
@@ -319,7 +388,6 @@ class InferenceService {
       final double x2 = (c.cx + c.w / 2).clamp(0.0, inputSize - 1);
       final double y2 = (c.cy + c.h / 2).clamp(0.0, inputSize - 1);
 
-      //Attach secondary condition if it clears the threshold (not implemented in UI but working in logic)
       SaplingClass? secondaryClass;
       double?       secondaryConfidence;
       if (c.secondaryScore >= secondaryClassThreshold &&
@@ -332,6 +400,7 @@ class InferenceService {
         saplingClass:        _toEnum(c.classIndex),
         confidence:          c.confidence,
         boxAreaPx:           c.areaPx,
+        // Model has no species class — true only after score + mask gates.
         isCalamansi:         true,
         secondaryClass:      secondaryClass,
         secondaryConfidence: secondaryConfidence,
@@ -339,6 +408,7 @@ class InferenceService {
         bboxTop:             y1,
         bboxRight:           x2,
         bboxBottom:          y2,
+        maskPolygon:         maskEval.polygon,
       ));
     }
 
@@ -359,16 +429,16 @@ class InferenceService {
         : results;
   }
 
-  // ── _maskLooksCalamansi ───────────────────────────────────────────────────
+  // ── _evaluateMask ─────────────────────────────────────────────────────────
 
-  bool _maskLooksCalamansi({
+  _MaskEval? _evaluateMask({
     required _Candidate   best,
     required List<double> rawDet,
     required List<double> rawProto,
     required List<int>    detShape,
     required List<int>    protoShape,
   }) {
-    if (protoShape.length != 4 || protoShape[1] != 32) return false;
+    if (protoShape.length != 4 || protoShape[1] != 32) return null;
     final int H = protoShape[2];
     final int W = protoShape[3];
     const int numClasses  = 4;
@@ -376,7 +446,7 @@ class InferenceService {
     const int rows        = 4 + numClasses + numMaskCoef;
 
     final bool rowFirst  = detShape[1] == rows;
-    if (!rowFirst && detShape[2] != rows) return false;
+    if (!rowFirst && detShape[2] != rows) return null;
     final int numAnchors = rowFirst ? detShape[2] : detShape[1];
 
     int idxDet(int row, int anchor) => rowFirst
@@ -402,9 +472,13 @@ class InferenceService {
     final int py1 = ((y1 / inputSize) * (H - 1)).floor().clamp(0, H - 1);
     final int py2 = ((y2 / inputSize) * (H - 1)).floor().clamp(0, H - 1);
 
-    if (px2 <= px1 || py2 <= py1) return false;
+    if (px2 <= px1 || py2 <= py1) return null;
 
-    final int total = (px2 - px1 + 1) * (py2 - py1 + 1);
+    final int bw = px2 - px1 + 1;
+    final int bh = py2 - py1 + 1;
+    final int total = bw * bh;
+    final sigs = List<double>.filled(total, 0.0);
+
     int    countAbove = 0;
     double sumSig     = 0.0;
 
@@ -418,7 +492,9 @@ class InferenceService {
         }
         final double sig = 1.0 / (1.0 + exp(-v));
         sumSig += sig;
-        if (sig > 0.5) countAbove++;
+        final int li = (y - py1) * bw + (x - px1);
+        sigs[li] = sig;
+        if (sig > maskBinaryThreshold) countAbove++;
       }
     }
 
@@ -432,11 +508,210 @@ class InferenceService {
       );
     }
 
-    return maskAreaRatio >= minMaskAreaRatioWithinBbox &&
+    final bool ok = maskAreaRatio >= minMaskAreaRatioWithinBbox &&
         maskMean >= minMaskMeanWithinBbox;
+    if (!ok) return const _MaskEval(ok: false, polygon: null);
+
+    final polygon = _maskBoundaryPolygon(
+      sigs: sigs,
+      bw: bw,
+      bh: bh,
+      px1: px1,
+      py1: py1,
+      protoW: W,
+      protoH: H,
+    );
+
+    return _MaskEval(ok: true, polygon: polygon);
   }
 
-  // ── _nms ──────────────────────────────────────────────────────────────────
+  /// Trace the outer silhouette of the proto mask (not a radial fan of edge pixels).
+  List<List<double>>? _maskBoundaryPolygon({
+    required List<double> sigs,
+    required int bw,
+    required int bh,
+    required int px1,
+    required int py1,
+    required int protoW,
+    required int protoH,
+  }) {
+    const int scale = 3;
+    final int uw = bw * scale;
+    final int uh = bh * scale;
+    final binary = List<bool>.filled(uw * uh, false);
+
+    bool sampleOn(double fx, double fy) {
+      final x0 = fx.floor().clamp(0, bw - 1);
+      final y0 = fy.floor().clamp(0, bh - 1);
+      final x1 = min(x0 + 1, bw - 1);
+      final y1 = min(y0 + 1, bh - 1);
+      final tx = fx - x0;
+      final ty = fy - y0;
+      final v00 = sigs[y0 * bw + x0];
+      final v10 = sigs[y0 * bw + x1];
+      final v01 = sigs[y1 * bw + x0];
+      final v11 = sigs[y1 * bw + x1];
+      final v = v00 * (1 - tx) * (1 - ty) +
+          v10 * tx * (1 - ty) +
+          v01 * (1 - tx) * ty +
+          v11 * tx * ty;
+      return v > maskBinaryThreshold;
+    }
+
+    for (int y = 0; y < uh; y++) {
+      for (int x = 0; x < uw; x++) {
+        final fx = (x + 0.5) / scale - 0.5;
+        final fy = (y + 0.5) / scale - 0.5;
+        binary[y * uw + x] = sampleOn(fx, fy);
+      }
+    }
+
+    final contour = _traceOuterContour(binary, uw, uh);
+    if (contour == null || contour.length < 8) return null;
+
+    final mapped = <List<double>>[];
+    for (final p in contour) {
+      final protoX = px1 + (p[0] + 0.5) / scale;
+      final protoY = py1 + (p[1] + 0.5) / scale;
+      mapped.add([
+        protoX / protoW * inputSize,
+        protoY / protoH * inputSize,
+      ]);
+    }
+
+    return _rdpClosed(mapped, 1.8);
+  }
+
+  /// Moore-neighbor walk around the largest connected blob.
+  List<List<int>>? _traceOuterContour(List<bool> binary, int w, int h) {
+    bool at(int x, int y) {
+      if (x < 0 || y < 0 || x >= w || y >= h) return false;
+      return binary[y * w + x];
+    }
+
+    int sx = -1, sy = -1;
+    findStart:
+    for (int y = 0; y < h; y++) {
+      for (int x = 0; x < w; x++) {
+        if (at(x, y)) {
+          sx = x;
+          sy = y;
+          break findStart;
+        }
+      }
+    }
+    if (sx < 0) return null;
+
+    // Clockwise 8-neighborhood: E, SE, S, SW, W, NW, N, NE
+    const dx = [1, 1, 0, -1, -1, -1, 0, 1];
+    const dy = [0, 1, 1, 1, 0, -1, -1, -1];
+
+    final contour = <List<int>>[];
+    int px = sx, py = sy;
+    int bx = sx - 1, by = sy;
+    final int maxSteps = w * h * 2;
+
+    for (int step = 0; step < maxSteps; step++) {
+      contour.add([px, py]);
+
+      int startK = 4;
+      for (int k = 0; k < 8; k++) {
+        if (px + dx[k] == bx && py + dy[k] == by) {
+          startK = k;
+          break;
+        }
+      }
+
+      bool found = false;
+      int nx = px, ny = py, nbx = bx, nby = by;
+      for (int i = 1; i <= 8; i++) {
+        final k = (startK + i) % 8;
+        final cx = px + dx[k];
+        final cy = py + dy[k];
+        if (at(cx, cy)) {
+          final pk = (k + 7) % 8;
+          nbx = px + dx[pk];
+          nby = py + dy[pk];
+          nx = cx;
+          ny = cy;
+          found = true;
+          break;
+        }
+      }
+      if (!found) break;
+
+      bx = nbx;
+      by = nby;
+      px = nx;
+      py = ny;
+      if (px == sx && py == sy && step > 2) break;
+    }
+
+    return contour.length >= 8 ? contour : null;
+  }
+
+  /// Closed-polygon RDP: split at the farthest vertex from the start, then simplify each arc.
+  List<List<double>> _rdpClosed(List<List<double>> pts, double epsilon) {
+    if (pts.length < 6) return pts;
+    var maxD = 0.0;
+    var idx = 1;
+    for (int i = 1; i < pts.length; i++) {
+      final dx = pts[i][0] - pts[0][0];
+      final dy = pts[i][1] - pts[0][1];
+      final d = sqrt(dx * dx + dy * dy);
+      if (d > maxD) {
+        maxD = d;
+        idx = i;
+      }
+    }
+    if (idx <= 1 || idx >= pts.length - 1) return _rdp(pts, epsilon);
+    final left = _rdp(pts.sublist(0, idx + 1), epsilon);
+    final right = _rdp([...pts.sublist(idx), pts.first], epsilon);
+    return [...left.sublist(0, left.length - 1), ...right.sublist(0, right.length - 1)];
+  }
+
+  /// Ramer–Douglas–Peucker: keep leaf silhouette, drop proto-grid jaggies.
+  List<List<double>> _rdp(List<List<double>> pts, double epsilon) {
+    if (pts.length < 3) return pts;
+
+    double dist(List<double> p, List<double> a, List<double> b) {
+      final dx = b[0] - a[0];
+      final dy = b[1] - a[1];
+      final len2 = dx * dx + dy * dy;
+      if (len2 <= 1e-9) {
+        final ex = p[0] - a[0];
+        final ey = p[1] - a[1];
+        return sqrt(ex * ex + ey * ey);
+      }
+      var t = ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / len2;
+      t = t.clamp(0.0, 1.0);
+      final qx = a[0] + t * dx;
+      final qy = a[1] + t * dy;
+      final ex = p[0] - qx;
+      final ey = p[1] - qy;
+      return sqrt(ex * ex + ey * ey);
+    }
+
+    var maxD = 0.0;
+    var idx = 0;
+    final end = pts.length - 1;
+    for (int i = 1; i < end; i++) {
+      final d = dist(pts[i], pts.first, pts[end]);
+      if (d > maxD) {
+        maxD = d;
+        idx = i;
+      }
+    }
+
+    if (maxD > epsilon) {
+      final left = _rdp(pts.sublist(0, idx + 1), epsilon);
+      final right = _rdp(pts.sublist(idx), epsilon);
+      return [...left.sublist(0, left.length - 1), ...right];
+    }
+    return [pts.first, pts.last];
+  }
+
+  // ── _nms (class-aware) ────────────────────────────────────────────────────
 
   List<_Candidate> _nms(List<_Candidate> list) {
     list.sort((a, b) => b.confidence.compareTo(a.confidence));
@@ -444,7 +719,14 @@ class InferenceService {
     for (final c in list) {
       bool suppressed = false;
       for (final k in kept) {
-        if (_iou(c, k) > iouThreshold) {
+        final iou = _iou(c, k);
+        if (c.classIndex == k.classIndex) {
+          if (iou > iouThreshold) {
+            suppressed = true;
+            break;
+          }
+        } else if (iou > crossClassIouThreshold) {
+          // Only collapse near-identical boxes of different classes.
           suppressed = true;
           break;
         }
@@ -482,7 +764,7 @@ class InferenceService {
   }
 }
 
-// ── _Candidate ────────────────────────────────────────────────────────────────
+// ── _Candidate / _MaskEval ────────────────────────────────────────────────────
 
 class _Candidate {
   final double cx, cy, w, h, confidence, areaPx;
@@ -499,6 +781,12 @@ class _Candidate {
   });
 }
 
+class _MaskEval {
+  final bool ok;
+  final List<List<double>>? polygon;
+  const _MaskEval({required this.ok, required this.polygon});
+}
+
 // ── Singleton ─────────────────────────────────────────────────────────────────
 
 final inferenceService = InferenceService();
@@ -508,7 +796,8 @@ final inferenceService = InferenceService();
 /// Runs in a background isolate to avoid UI jank.
 /// Applies bakeOrientation so portrait photos arrive upright.
 /// Computes Laplacian variance; rejects images below blurThreshold.
-/// Returns map with keys: inputData, isBlurry, blurVariance.
+/// Returns map with keys: inputData, isBlurry, blurVariance, letterbox meta,
+/// and displayBytes (EXIF-baked JPEG for overlay alignment).
 Map<String, dynamic> _preprocessAndCheckIsolate(Map<String, dynamic> args) {
   final String imagePath  = args['imagePath']     as String;
   final int    inputSize  = args['inputSize']     as int;
@@ -518,10 +807,10 @@ Map<String, dynamic> _preprocessAndCheckIsolate(Map<String, dynamic> args) {
   final raw   = img.decodeImage(bytes);
   if (raw == null) throw Exception('Cannot decode image');
 
-  ///EXIF rotation so the model always sees an upright image.
+  /// EXIF rotation so the model always sees an upright image.
   final source = img.bakeOrientation(raw);
 
-  ///Blur detection via Laplacian variance on a small greyscale copy.
+  /// Blur detection via Laplacian variance on a small greyscale copy.
   final grey     = img.grayscale(img.copyResize(source, width: 256));
   final variance = _laplacianVariance(grey);
   final isBlurry = variance < blurThresh;
@@ -530,14 +819,16 @@ Map<String, dynamic> _preprocessAndCheckIsolate(Map<String, dynamic> args) {
   final double scale = min(inputSize / source.width, inputSize / source.height);
   final int nw = (source.width  * scale).round();
   final int nh = (source.height * scale).round();
+  final int padX = (inputSize - nw) ~/ 2;
+  final int padY = (inputSize - nh) ~/ 2;
 
   final img.Image resized = img.copyResize(source, width: nw, height: nh);
   final img.Image canvas  = img.Image(width: inputSize, height: inputSize);
   img.fill(canvas, color: img.ColorRgb8(114, 114, 114));
   img.compositeImage(
     canvas, resized,
-    dstX: (inputSize - nw) ~/ 2,
-    dstY: (inputSize - nh) ~/ 2,
+    dstX: padX,
+    dstY: padY,
   );
 
   // CHW normalised float tensor
@@ -552,10 +843,31 @@ Map<String, dynamic> _preprocessAndCheckIsolate(Map<String, dynamic> args) {
     }
   }
 
+  // Downscale display JPEG if huge to keep memory low; keep aspect.
+  img.Image displaySrc = source;
+  const int maxDisplaySide = 1280;
+  if (source.width > maxDisplaySide || source.height > maxDisplaySide) {
+    final ds = min(maxDisplaySide / source.width, maxDisplaySide / source.height);
+    displaySrc = img.copyResize(
+      source,
+      width: (source.width * ds).round(),
+      height: (source.height * ds).round(),
+    );
+  }
+  final displayBytes = Uint8List.fromList(img.encodeJpg(displaySrc, quality: 90));
+
   return {
-    'inputData':    data,
-    'isBlurry':     isBlurry,
-    'blurVariance': variance,
+    'inputData':       data,
+    'isBlurry':        isBlurry,
+    'blurVariance':    variance,
+    'imageWidth':      source.width,
+    'imageHeight':     source.height,
+    'letterboxScale':  scale,
+    'padX':            padX.toDouble(),
+    'padY':            padY.toDouble(),
+    'displayBytes':    displayBytes,
+    'displayWidth':    displaySrc.width,
+    'displayHeight':   displaySrc.height,
   };
 }
 

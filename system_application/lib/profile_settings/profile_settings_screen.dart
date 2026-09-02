@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'name_notifier.dart';                            // ← new import
+import 'name_notifier.dart';
+import '../theme/app_theme.dart';
+import '../theme/app_widgets.dart';
 
 class ProfileSettingsScreen extends StatefulWidget {
   final String currentName;
@@ -71,7 +73,7 @@ class _ProfileSettingsScreenState
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('✅ Profile saved successfully!'),
-        backgroundColor: Colors.green,
+        backgroundColor: AppColors.tealDeep,
       ),
     );
 
@@ -83,10 +85,9 @@ class _ProfileSettingsScreenState
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile Settings'),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
+      body: AppBackdrop(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,11 +95,15 @@ class _ProfileSettingsScreenState
             Center(
               child: Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 48,
-                    backgroundColor: Colors.green,
-                    child: Icon(Icons.person,
-                        size: 52, color: Colors.white),
+                  Container(
+                    width: 88,
+                    height: 88,
+                    decoration: BoxDecoration(
+                      color: AppColors.lime,
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    child: const Icon(Icons.person_rounded,
+                        size: 48, color: AppColors.ink),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -140,20 +145,13 @@ class _ProfileSettingsScreenState
             const SizedBox(height: 28),
             ElevatedButton.icon(
               onPressed: isSaving ? null : saveProfile,
-              icon: const Icon(Icons.save),
-              label: Text(
-                  isSaving ? 'Saving…' : 'Save Changes'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                minimumSize: const Size(double.infinity, 52),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12)),
-              ),
+              icon: const Icon(Icons.save_outlined),
+              label: Text(isSaving ? 'Saving…' : 'Save Changes'),
             ),
 
           ],
         ),
+      ),
       ),
     );
   }

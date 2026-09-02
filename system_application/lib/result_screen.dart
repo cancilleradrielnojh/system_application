@@ -1,9 +1,10 @@
 // ========================= lib/result_screen.dart =========================
 import 'dart:io';
 import 'dart:math' as math;
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'detection/inference_service.dart';
+import 'theme/app_theme.dart';
 
 enum ResultAction { done, scanNew }
 
@@ -29,6 +30,7 @@ class _ResultScreenState extends State<ResultScreen> {
   bool _analyzing = true;
   List<DetectionResult> _results = const [];
   DetectionResult? _best;
+  ImageAnalysisResult? _analysis;
   String? _error;
 
   @override
@@ -46,8 +48,9 @@ class _ResultScreenState extends State<ResultScreen> {
       final res = await inferenceService.analyzeImage(widget.imagePath);
       if (!mounted) return;
       setState(() {
-        _results = res;
-        _best = res.isNotEmpty ? res.first : null;
+        _analysis = res;
+        _results = res.detections;
+        _best = res.detections.isNotEmpty ? res.detections.first : null;
         _analyzing = false;
       });
     } catch (e) {
@@ -65,15 +68,15 @@ class _ResultScreenState extends State<ResultScreen> {
   Color _classColor(SaplingClass? cls) {
     switch (cls) {
       case SaplingClass.healthy:
-        return Colors.green;
+        return AppColors.healthy;
       case SaplingClass.yellowing:
-        return const Color(0xFFD4A017);
+        return AppColors.warn;
       case SaplingClass.wilting:
-        return Colors.orange;
+        return AppColors.wilt;
       case SaplingClass.pestDamaged:
-        return Colors.red;
+        return AppColors.danger;
       case null:
-        return Colors.grey;
+        return AppColors.steel;
     }
   }
 
@@ -129,25 +132,33 @@ class _ResultScreenState extends State<ResultScreen> {
   void _onTryAgain() => Navigator.pop(context, null);
 
   /// Input: current screen state (`_analyzing`, `_error`, `_results`).
-  /// Output: plain image or image with mapped detection boxes.
+  /// Output: plain image or image with mapped detection boxes / leaf outlines.
   Widget _buildImagePreview() {
-    final file = File(widget.imagePath);
+    final analysis = _analysis;
     if (_analyzing ||
         _error != null ||
+        analysis == null ||
         _results.isEmpty ||
         _results.every((d) =>
             d.bboxLeft == null ||
             d.bboxTop == null ||
             d.bboxRight == null ||
             d.bboxBottom == null)) {
+      if (analysis != null) {
+        return Image.memory(
+          analysis.displayBytes,
+          width: double.infinity,
+          fit: BoxFit.contain,
+        );
+      }
       return Image.file(
-        file,
+        File(widget.imagePath),
         width: double.infinity,
         fit: BoxFit.contain,
       );
     }
     return _ScanImageWithBboxes(
-      imagePath: widget.imagePath,
+      analysis: analysis,
       detections: _results,
     );
   }
@@ -163,11 +174,20 @@ class _ResultScreenState extends State<ResultScreen> {
         _analyzing || _error != null || !hasDetections ? 0.32 : 0.14;
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.darkBg,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
-        title: const Text('Scan Result'),
+        title: Text(
+          'SCAN RESULT',
+          style: GoogleFonts.spaceGrotesk(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.4,
+            fontSize: 14,
+          ),
+        ),
+        centerTitle: true,
         automaticallyImplyLeading: false,
       ),
       body: Stack(
@@ -251,11 +271,12 @@ class _ResultScreenState extends State<ResultScreen> {
       children: [
         _dragHandle(),
         const SizedBox(height: 8),
-        const Center(child: CircularProgressIndicator(color: Colors.green)),
+        const Center(
+            child: CircularProgressIndicator(color: AppColors.teal, strokeWidth: 2.4)),
         const SizedBox(height: 14),
         const Center(
           child: Text(
-            'Analyzing sapling…',
+            'Reading the leaf…',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),
@@ -299,7 +320,7 @@ class _ResultScreenState extends State<ResultScreen> {
         const SizedBox(height: 20),
         _actionButton(
           label: 'Try Again',
-          color: Colors.green,
+          color: AppColors.ink,
           icon: Icons.refresh,
           onTap: _onTryAgain,
         ),
@@ -338,8 +359,8 @@ class _ResultScreenState extends State<ResultScreen> {
         const SizedBox(height: 8),
         const Center(
           child: Text(
-            'The image does not contain a recognizable calamansi sapling, '
-            'or the sapling is too small / unclear.\n'
+            'No calamansi leaf was recognized. Other plants, blurry shots, '
+            'or leaves that are too small / overlapping may be rejected.\n'
             'This scan will NOT be saved.',
             style: TextStyle(color: Colors.grey, fontSize: 13),
             textAlign: TextAlign.center,
@@ -348,7 +369,7 @@ class _ResultScreenState extends State<ResultScreen> {
         const SizedBox(height: 24),
         _actionButton(
           label: 'Try Again',
-          color: Colors.green,
+          color: AppColors.ink,
           icon: Icons.camera_alt,
           onTap: _onTryAgain,
         ),
@@ -454,7 +475,7 @@ class _ResultScreenState extends State<ResultScreen> {
               child: _actionButton(
                 label: 'Scan New',
                 icon: Icons.camera_alt,
-                color: Colors.green,
+                color: AppColors.ink,
                 onTap: _onScanNew,
               ),
             ),
@@ -481,7 +502,7 @@ class _ResultScreenState extends State<ResultScreen> {
           Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
       style: ElevatedButton.styleFrom(
         backgroundColor: color,
-        foregroundColor: Colors.white,
+        foregroundColor: color == AppColors.ink ? AppColors.lime : Colors.white,
         minimumSize: const Size(double.infinity, 52),
         shape:
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -515,107 +536,72 @@ class _ResultScreenState extends State<ResultScreen> {
 // for [BoxFit.contain].
 // ─────────────────────────────────────────────────────────────────────────────
 
-class _ScanImageWithBboxes extends StatefulWidget {
-  final String imagePath;
+class _ScanImageWithBboxes extends StatelessWidget {
+  final ImageAnalysisResult analysis;
   final List<DetectionResult> detections;
 
   const _ScanImageWithBboxes({
-    required this.imagePath,
+    required this.analysis,
     required this.detections,
   });
 
-  @override
-  State<_ScanImageWithBboxes> createState() => _ScanImageWithBboxesState();
-}
-
-class _ScanImageWithBboxesState extends State<_ScanImageWithBboxes> {
-  Size? _naturalSize;
-
-  @override
-  void initState() {
-    super.initState();
-    _loadNaturalSize();
-  }
-
-  /// Input: local image file path.
-  /// Output: natural image width/height used for accurate overlay mapping.
-  Future<void> _loadNaturalSize() async {
-    try {
-      final bytes = await File(widget.imagePath).readAsBytes();
-      final codec = await ui.instantiateImageCodec(bytes);
-      final frame = await codec.getNextFrame();
-      if (!mounted) return;
-      setState(() {
-        _naturalSize = Size(
-          frame.image.width.toDouble(),
-          frame.image.height.toDouble(),
-        );
-      });
-      frame.image.dispose();
-    } catch (_) {
-      if (mounted) setState(() => _naturalSize = null);
-    }
+  /// Map a letterbox-space point into display-image pixel coordinates.
+  Offset _toDisplay(double lx, double ly) {
+    final srcX = (lx - analysis.padX) / analysis.letterboxScale;
+    final srcY = (ly - analysis.padY) / analysis.letterboxScale;
+    final sx = analysis.displayWidth / analysis.imageWidth;
+    final sy = analysis.displayHeight / analysis.imageHeight;
+    return Offset(
+      (srcX * sx).clamp(0.0, analysis.displayWidth.toDouble()),
+      (srcY * sy).clamp(0.0, analysis.displayHeight.toDouble()),
+    );
   }
 
   @override
-
-  /// Input: detections in model-space coordinates + layout constraints.
-  /// Output: original image with correctly scaled overlay boxes.
   Widget build(BuildContext context) {
-    if (_naturalSize == null) {
-      return const Center(
-        child: CircularProgressIndicator(color: Colors.green),
-      );
-    }
+    final dwImg = analysis.displayWidth.toDouble();
+    final dhImg = analysis.displayHeight.toDouble();
 
-    final iw = _naturalSize!.width;
-    final ih = _naturalSize!.height;
-    // Must mirror preprocessing in `InferenceService._letterbox()`:
-    // - `nw/nh` are rounded
-    // - padding uses integer division (`~/ 2`)
-    const int inputSizeInt = InferenceService.inputSize;
-    final double inputSize = inputSizeInt.toDouble();
-    final double s = math.min(inputSize / iw, inputSize / ih);
-    final int nwInt = (iw * s).round();
-    final int nhInt = (ih * s).round();
-    final double padX = ((inputSizeInt - nwInt) ~/ 2).toDouble();
-    final double padY = ((inputSizeInt - nhInt) ~/ 2).toDouble();
-
-    final modelBoxes = widget.detections.where((d) =>
+    final modelBoxes = detections.where((d) =>
         d.bboxLeft != null &&
         d.bboxTop != null &&
         d.bboxRight != null &&
         d.bboxBottom != null);
 
     final mapped = modelBoxes.map((d) {
-      var ox1 = (d.bboxLeft! - padX) / s;
-      var oy1 = (d.bboxTop! - padY) / s;
-      var ox2 = (d.bboxRight! - padX) / s;
-      var oy2 = (d.bboxBottom! - padY) / s;
-
-      ox1 = ox1.clamp(0.0, iw);
-      oy1 = oy1.clamp(0.0, ih);
-      ox2 = ox2.clamp(0.0, iw);
-      oy2 = oy2.clamp(0.0, ih);
-
+      final tl = _toDisplay(d.bboxLeft!, d.bboxTop!);
+      final br = _toDisplay(d.bboxRight!, d.bboxBottom!);
       final rect = Rect.fromLTRB(
-        math.min(ox1, ox2),
-        math.min(oy1, oy2),
-        math.max(ox1, ox2),
-        math.max(oy1, oy2),
+        math.min(tl.dx, br.dx),
+        math.min(tl.dy, br.dy),
+        math.max(tl.dx, br.dx),
+        math.max(tl.dy, br.dy),
       );
 
+      List<Offset>? outline;
+      final poly = d.maskPolygon;
+      if (poly != null && poly.length >= 3) {
+        outline = poly
+            .map((p) => _toDisplay(p[0], p[1]))
+            .toList(growable: false);
+      }
+
       final label = '${d.className}  ${(d.confidence * 100).toStringAsFixed(1)}%';
-      return _MappedBox(rect: rect, label: label, confidence: d.confidence);
+      return _MappedBox(
+        rect: rect,
+        label: label,
+        confidence: d.confidence,
+        outline: outline,
+      );
     }).toList();
 
     return LayoutBuilder(
       builder: (context, constraints) {
         final cw = constraints.maxWidth;
         final ch = constraints.maxHeight;
-        final scale2 = math.min(cw / iw, ch / ih);
-        final dw = iw * scale2;
-        final dh = ih * scale2;
+        final scale2 = math.min(cw / dwImg, ch / dhImg);
+        final dw = dwImg * scale2;
+        final dh = dhImg * scale2;
         final dx = (cw - dw) / 2;
         final dy = (ch - dh) / 2;
 
@@ -623,8 +609,8 @@ class _ScanImageWithBboxesState extends State<_ScanImageWithBboxes> {
           fit: StackFit.expand,
           children: [
             Center(
-              child: Image.file(
-                File(widget.imagePath),
+              child: Image.memory(
+                analysis.displayBytes,
                 fit: BoxFit.contain,
                 width: cw,
                 height: ch,
@@ -651,7 +637,13 @@ class _MappedBox {
   final Rect rect;
   final String label;
   final double confidence;
-  _MappedBox({required this.rect, required this.label, required this.confidence});
+  final List<Offset>? outline;
+  _MappedBox({
+    required this.rect,
+    required this.label,
+    required this.confidence,
+    this.outline,
+  });
 }
 
 class _BboxesOverlayPainter extends CustomPainter {
@@ -668,14 +660,22 @@ class _BboxesOverlayPainter extends CustomPainter {
   final double dy;
 
   @override
-
-  /// Input: mapped box list and canvas size.
-  /// Output: draws each detection rectangle and label on top of the image.
   void paint(Canvas canvas, Size size) {
-    final stroke = Paint()
-      ..color = Colors.greenAccent
+    final boxStroke = Paint()
+      ..color = AppColors.lime.withValues(alpha: 0.7)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.8;
+      ..strokeWidth = 1.2;
+
+    final outlineStroke = Paint()
+      ..color = AppColors.lime
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.2
+      ..strokeJoin = StrokeJoin.round
+      ..strokeCap = StrokeCap.round;
+
+    final outlineFill = Paint()
+      ..color = AppColors.lime.withValues(alpha: 0.16)
+      ..style = PaintingStyle.fill;
 
     for (final item in mapped) {
       final r = Rect.fromLTRB(
@@ -685,7 +685,25 @@ class _BboxesOverlayPainter extends CustomPainter {
         dy + item.rect.bottom * scale2,
       );
 
-      canvas.drawRect(r, stroke);
+      final outline = item.outline;
+      if (outline != null && outline.length >= 3) {
+        final path = Path()
+          ..moveTo(
+            dx + outline.first.dx * scale2,
+            dy + outline.first.dy * scale2,
+          );
+        for (var i = 1; i < outline.length; i++) {
+          path.lineTo(
+            dx + outline[i].dx * scale2,
+            dy + outline[i].dy * scale2,
+          );
+        }
+        path.close();
+        canvas.drawPath(path, outlineFill);
+        canvas.drawPath(path, outlineStroke);
+      } else {
+        canvas.drawRect(r, boxStroke);
+      }
 
       final tp = TextPainter(
         text: TextSpan(
@@ -694,7 +712,7 @@ class _BboxesOverlayPainter extends CustomPainter {
             color: Colors.white,
             fontSize: 10,
             fontWeight: FontWeight.bold,
-            backgroundColor: Colors.green,
+            backgroundColor: AppColors.ink,
           ),
         ),
         textDirection: TextDirection.ltr,
@@ -707,9 +725,6 @@ class _BboxesOverlayPainter extends CustomPainter {
   }
 
   @override
-
-  /// Input: previous painter state.
-  /// Output: true only when overlay geometry/labels actually changed.
   bool shouldRepaint(covariant _BboxesOverlayPainter oldDelegate) {
     if (oldDelegate.scale2 != scale2 ||
         oldDelegate.dx != dx ||
@@ -719,7 +734,9 @@ class _BboxesOverlayPainter extends CustomPainter {
     if (oldDelegate.mapped.length != mapped.length) return true;
     for (var i = 0; i < mapped.length; i++) {
       if (oldDelegate.mapped[i].label != mapped[i].label ||
-          oldDelegate.mapped[i].rect != mapped[i].rect) {
+          oldDelegate.mapped[i].rect != mapped[i].rect ||
+          oldDelegate.mapped[i].outline?.length !=
+              mapped[i].outline?.length) {
         return true;
       }
     }

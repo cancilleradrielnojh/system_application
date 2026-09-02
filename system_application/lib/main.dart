@@ -5,9 +5,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'user_verification.dart';
 import 'home.dart';
 import 'profile_settings/theme_notifier.dart';
-import 'profile_settings/name_notifier.dart';         // ← new import
+import 'profile_settings/name_notifier.dart';
 import 'profile_settings/notification_service.dart';
 import 'detection/inference_service.dart';
+import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,8 +40,6 @@ class _MyAppState extends State<MyApp> {
     final prefs = await SharedPreferences.getInstance();
     final savedName = prefs.getString('username');
 
-    // ── Initialize nameNotifier so home.dart has the correct name
-    //    from the very first frame, even before any profile change.
     if (savedName != null) {
       nameNotifier.value = savedName;
     }
@@ -54,9 +53,37 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const MaterialApp(
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.light(),
         home: Scaffold(
-          body: Center(child: CircularProgressIndicator()),
+          backgroundColor: AppColors.mist,
+          body: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: AppColors.ink,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: const Icon(Icons.spa_rounded,
+                      color: AppColors.lime, size: 28),
+                ),
+                const SizedBox(height: 20),
+                const SizedBox(
+                  width: 28,
+                  height: 28,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.4,
+                    color: AppColors.teal,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     }
@@ -64,17 +91,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       scaffoldMessengerKey: NotificationService.messengerKey,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.light(),
+      darkTheme: AppTheme.dark(),
       themeMode: themeNotifier.value,
       home: name == null
           ? const UserVerification()

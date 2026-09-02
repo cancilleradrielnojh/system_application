@@ -1,7 +1,9 @@
 // ========================= lib/market.dart =========================
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'data/database_service.dart';
+import 'theme/app_theme.dart';
 
 class MarketScreen extends StatefulWidget {
   const MarketScreen({super.key});
@@ -128,14 +130,7 @@ class _MarketScreenState extends State<MarketScreen> {
     }
   }
 
-  Color _labelColor(String label) {
-    final l = label.toLowerCase();
-    if (l.contains('healthy')) return Colors.green;
-    if (l.contains('yellow'))  return Colors.orange;
-    if (l.contains('wilt'))    return const Color(0xFF7B5EA7);
-    if (l.contains('pest'))    return Colors.red;
-    return Colors.blueGrey;
-  }
+  Color _labelColor(String label) => AppTheme.healthColor(label);
 
   @override
   Widget build(BuildContext context) {
@@ -152,9 +147,9 @@ class _MarketScreenState extends State<MarketScreen> {
           children: [
 
             // ── Page title ───────────────────────────────────────
-            const Text('Market Insights',
-                style: TextStyle(
-                    fontSize: 24, fontWeight: FontWeight.bold)),
+            Text('Calamansi Sapling Insights',
+                style: GoogleFonts.spaceGrotesk(
+                    fontSize: 24, fontWeight: FontWeight.w700, letterSpacing: -0.4)),
             const SizedBox(height: 4),
             Text(
               totalScans == 0
@@ -171,30 +166,28 @@ class _MarketScreenState extends State<MarketScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF1B5E20), Color(0xFF43A047)],
+                  gradient: LinearGradient(
+                    colors: isDark
+                        ? const [Color(0xFF16352C), Color(0xFF0E1A16)]
+                        : const [AppColors.ink, Color(0xFF16352C)],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.green.withValues(alpha: 0.3),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
+                  border: Border.all(
+                    color: AppColors.lime.withValues(alpha: 0.35),
+                  ),
                 ),
                 child: Row(
                   children: [
                     const Icon(Icons.eco_rounded,
-                        color: Colors.white, size: 40),
+                        color: AppColors.lime, size: 40),
                     const SizedBox(width: 16),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Overall Health Rate',
+                          const Text('Overall Healthy Saplings',
                               style: TextStyle(
                                   color: Colors.white70, fontSize: 13)),
                           Text(
@@ -231,16 +224,16 @@ class _MarketScreenState extends State<MarketScreen> {
                   count: ready,
                   label: 'Healthy',
                   icon: Icons.spa_rounded,
-                  color: Colors.green,
-                  bgColor: isDark ? const Color(0xFF1B3A1E) : Colors.green.shade50,
+                  color: AppColors.healthy,
+                  bgColor: isDark ? const Color(0xFF1B3A1E) : const Color(0xFFE8F5EE),
                 )),
                 const SizedBox(width: 12),
                 Expanded(child: _StatCard(
                   count: yellowing,
                   label: 'Yellowing',
                   icon: Icons.wb_sunny_rounded,
-                  color: Colors.orange,
-                  bgColor: isDark ? const Color(0xFF3A2A0A) : Colors.orange.shade50,
+                  color: AppColors.warn,
+                  bgColor: isDark ? const Color(0xFF3A2A0A) : const Color(0xFFFBF3E0),
                 )),
               ],
             ),
@@ -251,16 +244,16 @@ class _MarketScreenState extends State<MarketScreen> {
                   count: pestDamaged,
                   label: 'Pest-Damaged',
                   icon: Icons.bug_report_rounded,
-                  color: Colors.red,
-                  bgColor: isDark ? const Color(0xFF3A1212) : Colors.red.shade50,
+                  color: AppColors.danger,
+                  bgColor: isDark ? const Color(0xFF3A1212) : const Color(0xFFFBECEA),
                 )),
                 const SizedBox(width: 12),
                 Expanded(child: _StatCard(
                   count: wilting,
                   label: 'Wilting',
                   icon: Icons.water_drop_rounded,
-                  color: const Color(0xFF7B5EA7),
-                  bgColor: isDark ? const Color(0xFF28183D) : const Color(0xFFF3EEF9),
+                  color: AppColors.wilt,
+                  bgColor: isDark ? const Color(0xFF3A2412) : const Color(0xFFF8EEE4),
                 )),
               ],
             ),
@@ -294,10 +287,10 @@ class _MarketScreenState extends State<MarketScreen> {
                 spacing: 16,
                 runSpacing: 8,
                 children: [
-                  _Legend(color: Colors.green,           label: 'Healthy',      count: ready),
-                  _Legend(color: Colors.orange,          label: 'Yellowing',    count: yellowing),
-                  _Legend(color: Colors.red,             label: 'Pest-Damaged', count: pestDamaged),
-                  _Legend(color: const Color(0xFF7B5EA7),label: 'Wilting',      count: wilting),
+                  _Legend(color: AppColors.healthy, label: 'Healthy',      count: ready),
+                  _Legend(color: AppColors.warn,    label: 'Yellowing',    count: yellowing),
+                  _Legend(color: AppColors.danger,  label: 'Pest-Damaged', count: pestDamaged),
+                  _Legend(color: AppColors.wilt,    label: 'Wilting',      count: wilting),
                 ],
               ),
               const SizedBox(height: 28),
@@ -473,7 +466,7 @@ class _BreakdownBar extends StatelessWidget {
               Expanded(
                 flex: ready,
                 child: Container(
-                  color: Colors.green,
+                  color: AppColors.healthy,
                   alignment: Alignment.center,
                   child: ready * 100 ~/ total >= 10
                       ? Text(
@@ -490,7 +483,7 @@ class _BreakdownBar extends StatelessWidget {
               Expanded(
                 flex: yellowing,
                 child: Container(
-                  color: Colors.orange,
+                  color: AppColors.warn,
                   alignment: Alignment.center,
                   child: yellowing * 100 ~/ total >= 10
                       ? Text(
@@ -507,7 +500,7 @@ class _BreakdownBar extends StatelessWidget {
               Expanded(
                 flex: pestDamaged,
                 child: Container(
-                  color: Colors.red,
+                  color: AppColors.danger,
                   alignment: Alignment.center,
                   child: pestDamaged * 100 ~/ total >= 10
                       ? Text(
@@ -524,7 +517,7 @@ class _BreakdownBar extends StatelessWidget {
               Expanded(
                 flex: wilting,
                 child: Container(
-                  color: const Color(0xFF7B5EA7),
+                  color: AppColors.wilt,
                   alignment: Alignment.center,
                   child: wilting * 100 ~/ total >= 10
                       ? Text(

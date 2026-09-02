@@ -1,5 +1,7 @@
 // ========================= lib/profile_settings/support_help_screen.dart =========================
 import 'package:flutter/material.dart';
+import '../theme/app_theme.dart';
+import '../theme/app_widgets.dart';
 
 class SupportHelpScreen extends StatelessWidget {
   const SupportHelpScreen({super.key});
@@ -9,10 +11,9 @@ class SupportHelpScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Support & Help'),
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
       ),
-      body: SingleChildScrollView(
+      body: AppBackdrop(
+        child: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,13 +21,13 @@ class SupportHelpScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.green.shade50,
+                color: AppColors.ink,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.green.shade200),
+                border: Border.all(color: AppColors.lime.withValues(alpha: 0.4)),
               ),
               child: const Row(
                 children: [
-                  Icon(Icons.eco, color: Colors.green, size: 40),
+                  BrandMark(size: 44),
                   SizedBox(width: 12),
                   Expanded(
                     child: Column(
@@ -35,12 +36,13 @@ class SupportHelpScreen extends StatelessWidget {
                         Text('Q-Lamansi',
                             style: TextStyle(
                                 fontSize: 18,
-                                fontWeight: FontWeight.bold)),
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white)),
                         SizedBox(height: 4),
                         Text(
                           'Calamansi sapling health evaluation '
                           'for smart farmers.',
-                          style: TextStyle(color: Colors.black54),
+                          style: TextStyle(color: Colors.white70),
                         ),
                       ],
                     ),
@@ -57,13 +59,13 @@ class SupportHelpScreen extends StatelessWidget {
 
             _section(
               icon: Icons.camera_alt,
-              color: Colors.green,
+              color: AppColors.teal,
               title: 'Scanning a Sapling',
               steps: [
-                'Tap START SCANNING on the Home screen.',
-                'Choose Capture Image to use your camera, or '
-                    'Upload from Gallery to pick an image.',
-                'Position the sapling inside the green frame.',
+                'Tap START SCAN on the Home screen.',
+                'Choose Capture to use your camera, or '
+                    'Upload from gallery to pick an image.',
+                'Position the leaf inside the lime brackets.',
                 'The AI model will analyze the image automatically.',
                 'If a calamansi sapling is detected, you will see '
                     'the result and a recommendation.',
@@ -174,6 +176,7 @@ class SupportHelpScreen extends StatelessWidget {
             const SizedBox(height: 20),
           ],
         ),
+      ),
       ),
     );
   }

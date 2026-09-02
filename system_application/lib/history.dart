@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'data/database_service.dart';
+import 'theme/app_theme.dart';
 
 class HistoryPage extends StatefulWidget {
   final VoidCallback? onHistoryChanged;
@@ -38,20 +40,13 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   // ── Helpers ─────────────────────────────────────────────────────
-  Color _healthColor(String label) {
-    final l = label.toLowerCase();
-    if (l.contains('healthy')) return Colors.green;
-    if (l.contains('yellow'))  return Colors.orange;
-    if (l.contains('wilt'))    return const Color(0xFF7B5EA7);
-    if (l.contains('pest'))    return Colors.red;
-    return Colors.grey;
-  }
+  Color _healthColor(String label) => AppTheme.healthColor(label);
 
   Color _healthColorFromScore(double health) {
-    if (health >= 90) return Colors.green;
-    if (health >= 60) return Colors.orange;
-    if (health >= 40) return const Color(0xFF7B5EA7);
-    return Colors.red;
+    if (health >= 90) return AppColors.healthy;
+    if (health >= 60) return AppColors.warn;
+    if (health >= 40) return AppColors.wilt;
+    return AppColors.danger;
   }
 
   String _formatTime(String raw) {
@@ -120,9 +115,14 @@ class _HistoryPageState extends State<HistoryPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Scan History',
-                    style: TextStyle(
-                        fontSize: 22, fontWeight: FontWeight.bold)),
+                Text(
+                  'Scan History',
+                  style: GoogleFonts.spaceGrotesk(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w700,
+                    letterSpacing: -0.4,
+                  ),
+                ),
                 if (_history.isNotEmpty)
                   TextButton.icon(
                     onPressed: _confirmClearAll,
@@ -270,9 +270,9 @@ class _HistoryPageState extends State<HistoryPage> {
             padding: const EdgeInsets.only(top: 3),
             child: Text(
               time,
-              style: const TextStyle(
+              style: TextStyle(
                   fontSize: 11,
-                  color: Color.fromARGB(255, 54, 129, 57),
+                  color: isDark ? AppColors.darkMuted : AppColors.steel,
                   letterSpacing: 0.4),
             ),
           ),
