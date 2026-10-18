@@ -1,0 +1,72 @@
+name: iOS build (unsigned IPA)
+
+# Builds the iOS app on a GitHub macOS runner and uploads an UNSIGNED .ipa.
+# You sign + install it on your iPhone from Windows with Sideloadly/AltStore
+# (a free Apple ID cannot be used for signing inside CI).
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Build mode (profile also shows the live-detection metrics overlay)"
+        type: choice
+        options: [release, profile]
+        default: release
+  push:
+    branches: [ios-migration]
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check ONNX models are in the repo
+        run: |
+          for f in assets/models/best_flutter.onnx assets/models/best_flutter_live_det.onnx; do
+            if [ ! -s "$f" ]; then echo "::error::Missing model file: $f"; exit 1; fi
+            ls -l "$f"
+          done
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Tool versions
+        run: |
+          flutter --version
+          xcodebuild -version
+          pod --version
+
+      - name: Resolve dependencies
+        run: flutter pub get
+
+      - name: Static analysis (informational)
+        continue-on-error: true
+        run: flutter analyze
+
+      - name: Unit tests (informational)
+        continue-on-error: true
+        run: flutter test
+
+      - name: Build iOS (no code signing)
+        run: flutter build ios --${{ inputs.mode || 'release' }} --no-codesign
+
+      - name: Package unsigned IPA
+        run: |
+          rm -rf Payload && mkdir Payload
+          cp -R build/ios/iphoneos/Runner.app Payload/
+          zip -qry calamansi-unsigned.ipa Payload
+          ls -lh calamansi-unsigned.ipa
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: calamansi-unsigned-ipa
+          path: calamansi-unsigned.ipa
+          retention-days: 14
