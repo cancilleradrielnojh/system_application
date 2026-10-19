@@ -42,6 +42,7 @@ class LiveFrameResult {
   /// seen in the model output (0 in release builds).
   final String diag;
   final double maxScore;
+  final String stats;
 
   const LiveFrameResult({
     required this.detections,
@@ -56,6 +57,7 @@ class LiveFrameResult {
     this.totalMs       = 0,
     this.diag          = '',
     this.maxScore      = 0,
+    this.stats         = '',
   });
 }
 
@@ -223,6 +225,8 @@ class InferenceService {
   static const int  _ortThreads = 4;
   /// Dev-only: best raw class score of the last decoded live frame.
   static double _debugMaxScore = 0;
+  /// Dev-only: candidates left after each gate, and the best-scoring box.
+  static String _debugStats = '';
   static const String _ep = 'cpu'; // 'cpu' | 'xnnpack' | 'nnapi'
 
   bool _isLoaded = false;
@@ -405,6 +409,7 @@ class InferenceService {
       totalMs:        swTotal.elapsedMicroseconds / 1000.0,
       diag:           diag,
       maxScore:       (kDebugMode || kProfileMode) ? _debugMaxScore : 0,
+      stats:          (kDebugMode || kProfileMode) ? _debugStats : '',
     );
   }
 
@@ -440,15 +445,29 @@ class InferenceService {
       return v is double ? v : (v as num).toDouble();
     }
 
+    String top = '';
     if (kDebugMode || kProfileMode) {
       double m = 0;
+      int mi = 0;
       for (int i = 0; i < numAnchors; i++) {
         for (int c = 0; c < numClasses; c++) {
           final s = at(4 + c, i);
-          if (s > m) m = s;
+          if (s > m) {
+            m = s;
+            mi = i;
+          }
         }
       }
       _debugMaxScore = m;
+      top = 'top ${at(0, mi).round()},${at(1, mi).round()} '
+          '${at(2, mi).round()}x${at(3, mi).round()}';
+    }
+    int nGeom = 0;
+    int nConf = 0;
+    void stat(int k, int f) {
+      if (kDebugMode || kProfileMode) {
+        _debugStats = 'g$nGeom c$nConf k$k f$f $top';
+      }
     }
 
     final candidates = <_Candidate>[];
@@ -476,6 +495,7 @@ class InferenceService {
 
       final double aspectRatio = max(wAbs, hAbs) / min(wAbs, hAbs);
       if (aspectRatio > maxAspectRatio) continue;
+      nGeom++;
 
       double maxScore = 0; int maxClass = 0;
       for (int c = 0; c < numClasses; c++) {
@@ -487,6 +507,7 @@ class InferenceService {
       }
 
       if (maxScore >= confThreshold) {
+        nConf++;
         candidates.add(_Candidate(
           cx: cxU, cy: cyU, w: wAbs, h: hAbs,
           confidence:     maxScore,
@@ -499,10 +520,16 @@ class InferenceService {
       }
     }
 
-    if (candidates.isEmpty) return const [];
+    if (candidates.isEmpty) {
+      stat(0, 0);
+      return const [];
+    }
 
     final kept = _nms(candidates);
-    if (kept.isEmpty) return const [];
+    if (kept.isEmpty) {
+      stat(0, 0);
+      return const [];
+    }
 
     final results = <DetectionResult>[];
     for (final c in kept) {
@@ -526,6 +553,7 @@ class InferenceService {
       ));
     }
 
+    stat(kept.length, results.length);
     if (results.isEmpty) return const [];
 
     results.sort((a, b) => b.confidence.compareTo(a.confidence));
