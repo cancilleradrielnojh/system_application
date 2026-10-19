@@ -106,6 +106,37 @@ void main() {
     expect(data[2 * 8 * 8 + offset], closeTo(10 / 255.0, 1e-6));
   });
 
+  test('one-pass BGRA8888 ignores bytesPerPixel=1 reported by iOS', () {
+    const w = 4;
+    const h = 4;
+    final bytes = Uint8List(w * h * 4);
+    for (int i = 0; i < w * h; i++) {
+      bytes[i * 4] = 10; // B
+      bytes[i * 4 + 1] = 20; // G
+      bytes[i * 4 + 2] = 40; // R
+      bytes[i * 4 + 3] = 255; // A
+    }
+    final result = preprocessOnePass({
+      'planes': [TransferableTypedData.fromList([bytes])],
+      'planeMeta': [
+        // iOS has no bytesPerPixel; the worker sends 1 in that case.
+        {'bytesPerRow': w * 4, 'bytesPerPixel': 1},
+      ],
+      'width': w,
+      'height': h,
+      'format': 'bgra8888',
+      'sensorOrientation': 0,
+      'inputSize': 8,
+    });
+    expect(result['ok'], true);
+    final data =
+        (result['inputData'] as TransferableTypedData).materialize().asFloat32List();
+    // Every pixel is the same colour, so every sampled R value must be 40/255.
+    for (int i = 0; i < 8 * 8; i++) {
+      expect(data[i], closeTo(40 / 255.0, 1e-6));
+    }
+  });
+
   test('one-pass 1280x720 yuv420 preprocess is well under 1s on host', () {
     const w = 1280;
     const h = 720;

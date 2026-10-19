@@ -140,7 +140,10 @@ Map<String, dynamic> preprocessOnePass(Map<String, dynamic> msg) {
     final bytes = planes.first;
     final meta = planeMeta.first;
     final rowStride = meta['bytesPerRow'] as int;
-    final bpp = (meta['bytesPerPixel'] as int?) ?? 4;
+    // BGRA8888 is always 4 bytes per pixel. Do not read it from the plane
+    // metadata: iOS reports bytesPerPixel as null, and the worker turns null
+    // into 1, which made the sampler step 1 byte per pixel (a smeared image).
+    const bpp = 4;
     writeSample = (cx, cy, offset) {
       final i = cy * rowStride + cx * bpp;
       if (i + 2 >= bytes.length) return;
