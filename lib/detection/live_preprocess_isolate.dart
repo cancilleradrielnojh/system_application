@@ -29,8 +29,9 @@ LiveLetterbox computeLiveLetterbox({
   required int cameraHeight,
   required int sensorOrientation,
   required int inputSize,
+  bool preRotated = false,
 }) {
-  final angle = normalizeSensorAngle(sensorOrientation);
+  final angle = preRotated ? 0 : normalizeSensorAngle(sensorOrientation);
   final int frameWidth;
   final int frameHeight;
   if (angle == 90 || angle == 270) {
@@ -105,13 +106,18 @@ Map<String, dynamic> preprocessOnePass(Map<String, dynamic> msg) {
   final sensorOrientation = msg['sensorOrientation'] as int;
   final inputSize = msg['inputSize'] as int;
 
+  // iOS (BGRA8888) frames can arrive already upright (portrait: height > width).
+  // Rotating them again by the sensor orientation turns the image sideways and
+  // the model finds nothing. Android YUV420 frames are unaffected by this rule.
+  final bool preRotated = format == 'bgra8888' && height > width;
   final box = computeLiveLetterbox(
     cameraWidth: width,
     cameraHeight: height,
     sensorOrientation: sensorOrientation,
     inputSize: inputSize,
+    preRotated: preRotated,
   );
-  final angle = normalizeSensorAngle(sensorOrientation);
+  final angle = preRotated ? 0 : normalizeSensorAngle(sensorOrientation);
 
   const padColor = 114.0 / 255.0;
   final data = Float32List(3 * inputSize * inputSize);
@@ -210,5 +216,6 @@ Map<String, dynamic> preprocessOnePass(Map<String, dynamic> msg) {
     'letterboxScale': box.scale,
     'padX': box.padX,
     'padY': box.padY,
+    'diag': '$format ${width}x$height so$sensorOrientation rot$angle',
   };
 }

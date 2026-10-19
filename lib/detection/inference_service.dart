@@ -38,6 +38,11 @@ class LiveFrameResult {
   final double postprocessMs;
   final double totalMs;
 
+  /// Dev-only: frame format/size/rotation used, and best raw class score
+  /// seen in the model output (0 in release builds).
+  final String diag;
+  final double maxScore;
+
   const LiveFrameResult({
     required this.detections,
     required this.frameWidth,
@@ -49,6 +54,8 @@ class LiveFrameResult {
     this.inferenceMs   = 0,
     this.postprocessMs = 0,
     this.totalMs       = 0,
+    this.diag          = '',
+    this.maxScore      = 0,
   });
 }
 
@@ -214,6 +221,8 @@ class InferenceService {
 
   /// ORT tuning knobs — benchmark 2 / 4 / 6 on the real phone and keep the best.
   static const int  _ortThreads = 4;
+  /// Dev-only: best raw class score of the last decoded live frame.
+  static double _debugMaxScore = 0;
   static const String _ep = 'cpu'; // 'cpu' | 'xnnpack' | 'nnapi'
 
   bool _isLoaded = false;
@@ -381,6 +390,7 @@ class InferenceService {
 
     final detections = _decodeBoxesOnly(rawDetRaw, detShape);
     final double postprocessMs = swStage.elapsedMicroseconds / 1000.0;
+    final String diag = (pre['diag'] as String?) ?? '';
 
     return LiveFrameResult(
       detections:     detections,
@@ -393,6 +403,8 @@ class InferenceService {
       inferenceMs:    inferenceMs,
       postprocessMs:  postprocessMs,
       totalMs:        swTotal.elapsedMicroseconds / 1000.0,
+      diag:           diag,
+      maxScore:       (kDebugMode || kProfileMode) ? _debugMaxScore : 0,
     );
   }
 
@@ -426,6 +438,17 @@ class InferenceService {
     double at(int row, int anchor) {
       final v = rawDet[idx(row, anchor)];
       return v is double ? v : (v as num).toDouble();
+    }
+
+    if (kDebugMode || kProfileMode) {
+      double m = 0;
+      for (int i = 0; i < numAnchors; i++) {
+        for (int c = 0; c < numClasses; c++) {
+          final s = at(4 + c, i);
+          if (s > m) m = s;
+        }
+      }
+      _debugMaxScore = m;
     }
 
     final candidates = <_Candidate>[];

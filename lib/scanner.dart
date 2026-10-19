@@ -289,6 +289,8 @@ class _ScannerScreenState extends State<ScannerScreen>
         postprocessMs: last?.postprocessMs ?? 0,
         totalMs: last?.totalMs ?? 0,
         intervalMs: _liveInterval.inMilliseconds,
+        diag: last?.diag ?? '',
+        maxScore: last?.maxScore ?? 0,
       );
       _cameraFrameCounter = 0;
       _inferenceCompletionCounter = 0;
@@ -954,6 +956,8 @@ class _LiveMetrics {
   final double postprocessMs;
   final double totalMs;
   final int intervalMs;
+  final String diag;
+  final double maxScore;
 
   const _LiveMetrics({
     this.cameraFps = 0,
@@ -964,6 +968,8 @@ class _LiveMetrics {
     this.postprocessMs = 0,
     this.totalMs = 0,
     this.intervalMs = 0,
+    this.diag = '',
+    this.maxScore = 0,
   });
 }
 
@@ -990,7 +996,8 @@ class _DevMetricsOverlay extends StatelessWidget {
         'pre ${ms(metrics.preprocessMs)}  '
         'inf ${ms(metrics.inferenceMs)}  '
         'post ${ms(metrics.postprocessMs)}\n'
-        'total ${ms(metrics.totalMs)}  interval ${metrics.intervalMs}ms',
+        'total ${ms(metrics.totalMs)}  interval ${metrics.intervalMs}ms\n'
+        'maxScore ${metrics.maxScore.toStringAsFixed(2)}  ${metrics.diag}',
         style: const TextStyle(
           color: Colors.greenAccent,
           fontSize: 10,

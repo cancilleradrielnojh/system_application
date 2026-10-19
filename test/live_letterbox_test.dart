@@ -21,6 +21,21 @@ void main() {
     expect(box.padY, 0);
   });
 
+  test('iOS pre-rotated portrait frame is not rotated again', () {
+    final box = computeLiveLetterbox(
+      cameraWidth: 720,
+      cameraHeight: 1280,
+      sensorOrientation: 90,
+      inputSize: 640,
+      preRotated: true,
+    );
+    expect(box.frameWidth, 720);
+    expect(box.frameHeight, 1280);
+    expect(box.scale, 640 / 1280);
+    expect(box.padX, 140);
+    expect(box.padY, 0);
+  });
+
   test('one-pass YUV fills pad color and samples content', () {
     const w = 8;
     const h = 6;

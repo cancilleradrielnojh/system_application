@@ -138,6 +138,7 @@ class LivePreprocessWorker {
         'letterboxScale': result['letterboxScale'] as double,
         'padX': result['padX'] as double,
         'padY': result['padY'] as double,
+        'diag': (result['diag'] as String?) ?? '',
       };
     } catch (e) {
       debugPrint('Live preprocess request failed: $e');
