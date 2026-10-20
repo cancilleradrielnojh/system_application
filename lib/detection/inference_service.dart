@@ -144,30 +144,27 @@ class DetectionResult {
   String get recommendation {
     switch (saplingClass) {
       case SaplingClass.healthy:
-        return '- Keep 6-8 hours of morning sunlight when possible.\n'
-            '- Water only when the top soil feels dry; avoid daily overwatering.\n'
-            '- Add light compost or balanced citrus fertilizer every 3-4 weeks.\n'
-            '- Remove weak inner shoots to improve airflow and prevent disease.';
+        return '- Keep current care. \n'
+            '- Keep monitoring.\n'
+            '- Check size, stem and roots before transplanting\n';
+
       case SaplingClass.pestDamaged:
-        return '- Remove heavily damaged leaves and dispose away from the nursery.\n'
-            '- Spray neem oil or approved insecticidal soap in late afternoon.\n'
-            '- Check underside of leaves every 2-3 days for eggs and soft pests.\n'
-            '- Keep nearby weeds controlled to reduce pest hosts.';
+        return '- Inspect both sides of the leaves. \n'
+            '- Separate the sapling. \n'
+            '- Isolate from other sapling.\n';
       case SaplingClass.wilting:
-        return '- Check root zone moisture first; wilt can come from both dry and soggy soil.\n'
-            '- Improve drainage by loosening compacted media and clearing blocked holes.\n'
-            '- Water deeply, then wait until topsoil dries before next watering.\n'
-            '- Provide temporary partial shade during extreme midday heat.';
+        return '- Check soil moisture and adjust watering.\n'
+            '- Look again at a cooler time of day.\n'
+            '- If it persist, check roots.\n';
       case SaplingClass.yellowing:
-        return '- Apply mild nitrogen feed or seaweed/compost tea at low dose.\n'
-            '- Check pH (target around 5.5-6.5) to improve nutrient uptake.\n'
-            '- Avoid waterlogging; keep moisture even but not saturated.\n'
-            '- Prune severely yellow leaves after new healthy growth appears.';
+        return '- Check soil moisture and draiange.\n'
+            '- Possible nutrients need.\n'
+            '- Rescan Later.\n';
       case null:
         return 'No recommendation available.';
     }
   }
-
+  
   /// Input: detected class + confidence.
   /// Output: simple numeric health score for summaries/stats.
   double get healthScore {
@@ -198,11 +195,11 @@ class InferenceService {
   static const double crossClassIouThreshold = 0.40;
 
   // ── Box geometry filters ──────────────────────────────────────────────────
-  static const double minBoxAreaPx   = 300;
+  static const double minBoxAreaPx   = 150;
   /// Cap oversized boxes that often swallow multiple adjacent leaves.
-  static const double maxBoxAreaPx   = 150000;
-  static const double minSidePx      = 10;
-  static const double maxSidePx      = 1024;
+  static const double maxBoxAreaPx   = 750000;
+  static const double minSidePx      = 5;
+  static const double maxSidePx      = 2048;
   static const double maxAspectRatio = 3.0;
 
   // ── Mask gating thresholds ────────────────────────────────────────────────
@@ -213,12 +210,12 @@ class InferenceService {
   /// Used ONLY to draw the outline (not to accept/reject a detection, which
   /// still uses [maskBinaryThreshold]). Lower so shaded leaves and thin
   /// stems are not dropped from the silhouette.
-  static const double maskOutlineThreshold       = 0.12;
+  static const double maskOutlineThreshold       = 0.0015;
 
   /// Gaps of up to about 2x this many pixels (on the 3x upsampled outline
   /// grid, i.e. roughly 4 input pixels each) between pieces of the plant are
   /// bridged so they form one outline.
-  static const int    outlineCloseRadius         = 5;
+  static const int    outlineCloseRadius         = 4;
 
   // ── Blur detection ────────────────────────────────────────────────
   static const double blurThreshold = 80.0;
