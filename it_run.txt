@@ -1,0 +1,1066 @@
+﻿00:00 +0: loading C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart
+Running Gradle task 'assembleDebug'...                             55.9s
+ΓêÜ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          12.9s
+00:00 +0: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: (setUpAll)
+flutter_onnxruntime: getAvailableProviders() left out providers with no OrtProvider value: (WEBGPU)
+ORT available providers: [OrtProvider.CPU, OrtProvider.NNAPI, OrtProvider.XNNPACK]
+Γ£à ONNX segmentation model loaded
+00:02 +0: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-00 both models loaded before the UI starts
+00:03 +1: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-01 first launch shows the verification screen
+00:04 +1: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-00 both models loaded before the UI starts
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:05 +2: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-02 empty name rejected; valid name saved and opens Home
+00:05 +2: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-00 both models loaded before the UI starts
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:09 +3: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-03 returning user goes straight to Home
+00:10 +3: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-00 both models loaded before the UI starts
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:10 +4: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-04 bottom navigation reaches every tab
+00:10 +4: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-00 both models loaded before the UI starts
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:17 +5: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-05 one saved scan is consistent on Home, History, Stats
+00:17 +5: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-00 both models loaded before the UI starts
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:22 +6: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-06 History "Clear all" empties Home, History and Stats
+00:22 +6: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: IT-FL-00 both models loaded before the UI starts
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:31 +7: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/app_flow_test.dart: (tearDownAll)
+00:31 +7: loading C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart
+Running Gradle task 'assembleDebug'...                             36.5s
+ΓêÜ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          13.3s
+01:31 +7: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: (setUpAll)
+flutter_onnxruntime: getAvailableProviders() left out providers with no OrtProvider value: (WEBGPU)
+ORT available providers: [OrtProvider.CPU, OrtProvider.NNAPI, OrtProvider.XNNPACK]
+Γ£à ONNX segmentation model loaded
+01:35 +7: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: IT-PL-01 sharp synthetic image: result contract holds
+IT-PL-01 detections on noise: 0
+01:39 +8: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: IT-PL-02 letterbox metadata is exact for a known size
+01:47 +9: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: IT-PL-03 flat image is rejected as too blurry
+ΓÜá∩╕Å  Image too blurry (variance=0.0). Skipping inference.
+01:47 +10: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: IT-PL-04 a file that is not an image fails, and the service recovers
+01:50 +11: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: IT-PL-05 same input twice gives identical detections
+01:56 +12: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: IT-PL-06 sample photos (optional): invariants + expected vs predicted
+  No sample photos in integration_test/samples/ (see header).
+01:56 +12 ~1: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: IT-PL-07 latency of analyzeImage on this device
+IT-PL-07 latency: {runs: 15, min_ms: 4055, median_ms: 4096.0, p95_ms: 4120.0, max_ms: 4131, scope: analyzeImage end-to-end (decode + preprocess isolate + inference + decode + mask outline) on a 1280x960 JPEG}
+03:03 +13 ~1: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/inference_pipeline_test.dart: (tearDownAll)
+03:03 +13 ~1: loading C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/theme_toggle_test.dart
+Running Gradle task 'assembleDebug'...                             34.7s
+ΓêÜ Built build\app\outputs\flutter-apk\app-debug.apk
+Installing build\app\outputs\flutter-apk\app-debug.apk...          20.6s
+04:09 +13 ~1: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/theme_toggle_test.dart: IT-TH-01 toggle updates the live MaterialApp and is persisted
+flutter_onnxruntime: getAvailableProviders() left out providers with no OrtProvider value: (WEBGPU)
+ORT available providers: [OrtProvider.CPU, OrtProvider.NNAPI, OrtProvider.XNNPACK]
+Γ£à ONNX segmentation model loaded
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/7821207a715952786271398700a0ffaf2dcad829090ab5bca09b9cab112fa8eb.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/dc709777ca632c127616b1350e7d30103b0e897fd3d86741fa4344233315b32c.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/22eb3cc87edf0bd73cd7b79336429dd0035eaf2c9a9fe83c6c7e11b825116926.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/ab86961acdc191ac6c41bea55b4a5dbc4b2930918bfdbe8150a813c03aa59529.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/6fd5773a637cb4a7c36839eeca3106dcd1a8d92b138d1652e60fd4b2e31f74ab.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Bold because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/37e0c64412c4bc4238d29a8f2efe99d52201747f206a3600f36cd228b1168f55.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Medium because the following exception occurred:
+Exception: Failed to load font with url https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf: ClientException with SocketException: Failed host lookup: 'fonts.gstatic.com' (OS Error: No address associated with hostname, errno = 7), uri=https://fonts.gstatic.com/s/a/2e9fd260f8833152c4b6066527d1b9591e1afb50a341a2eac825c9b4d29ba414.ttf
+
+See https://docs.flutter.dev/development/data-and-backend/networking#platform-notes.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+04:18 +14 ~1: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/integration_test/theme_toggle_test.dart: (tearDownAll)
+04:19 +14 ~1: All tests passed!

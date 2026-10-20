@@ -200,15 +200,25 @@ class InferenceService {
   // ── Box geometry filters ──────────────────────────────────────────────────
   static const double minBoxAreaPx   = 300;
   /// Cap oversized boxes that often swallow multiple adjacent leaves.
-  static const double maxBoxAreaPx   = 55000;
+  static const double maxBoxAreaPx   = 150000;
   static const double minSidePx      = 10;
   static const double maxSidePx      = 1024;
   static const double maxAspectRatio = 3.0;
 
   // ── Mask gating thresholds ────────────────────────────────────────────────
-  static const double minMaskAreaRatioWithinBbox = 0.12;
-  static const double minMaskMeanWithinBbox      = 0.25;
+  static const double minMaskAreaRatioWithinBbox = 0.08;
+  static const double minMaskMeanWithinBbox      = 0.12;
   static const double maskBinaryThreshold        = 0.5;
+
+  /// Used ONLY to draw the outline (not to accept/reject a detection, which
+  /// still uses [maskBinaryThreshold]). Lower so shaded leaves and thin
+  /// stems are not dropped from the silhouette.
+  static const double maskOutlineThreshold       = 0.12;
+
+  /// Gaps of up to about 2x this many pixels (on the 3x upsampled outline
+  /// grid, i.e. roughly 4 input pixels each) between pieces of the plant are
+  /// bridged so they form one outline.
+  static const int    outlineCloseRadius         = 5;
 
   // ── Blur detection ────────────────────────────────────────────────
   static const double blurThreshold = 80.0;
@@ -927,7 +937,7 @@ class InferenceService {
           v10 * tx * (1 - ty) +
           v01 * (1 - tx) * ty +
           v11 * tx * ty;
-      return v > maskBinaryThreshold;
+      return v > maskOutlineThreshold;
     }
 
     for (int y = 0; y < uh; y++) {
@@ -938,7 +948,16 @@ class InferenceService {
       }
     }
 
-    final contour = _traceOuterContour(binary, uw, uh);
+    // Bridge small gaps between leaves/stem, then keep the largest piece so
+    // the traced outline is the whole plant rather than whichever pixel the
+    // scan happened to hit first.
+    final joined = _keepLargestBlob(
+      _closeGaps(binary, uw, uh, outlineCloseRadius),
+      uw,
+      uh,
+    );
+
+    final contour = _traceOuterContour(joined, uw, uh);
     if (contour == null || contour.length < 8) return null;
 
     final mapped = <List<double>>[];
@@ -951,10 +970,113 @@ class InferenceService {
       ]);
     }
 
-    return _rdpClosed(mapped, 1.8);
+    return _rdpClosed(mapped, 1.0);
   }
 
-  /// Moore-neighbor walk around the largest connected blob.
+  /// Test hook for the outline builder (see test/mask_outline_test.dart).
+  @visibleForTesting
+  static List<List<double>>? maskBoundaryPolygonForTest({
+    required List<double> sigs,
+    required int bw,
+    required int bh,
+    int px1 = 0,
+    int py1 = 0,
+    required int protoW,
+    required int protoH,
+  }) =>
+      _maskBoundaryPolygon(
+        sigs: sigs,
+        bw: bw,
+        bh: bh,
+        px1: px1,
+        py1: py1,
+        protoW: protoW,
+        protoH: protoH,
+      );
+
+  /// Morphological closing (dilate then erode) with a square kernel.
+  static List<bool> _closeGaps(List<bool> src, int w, int h, int r) {
+    var m = _morph1d(src, w, h, r, dilate: true, horizontal: true);
+    m = _morph1d(m, w, h, r, dilate: true, horizontal: false);
+    m = _morph1d(m, w, h, r, dilate: false, horizontal: true);
+    m = _morph1d(m, w, h, r, dilate: false, horizontal: false);
+    return m;
+  }
+
+  /// One separable pass using prefix sums. Cells outside the grid count as
+  /// "on" when eroding so blobs touching the box edge are not eaten.
+  static List<bool> _morph1d(
+    List<bool> src,
+    int w,
+    int h,
+    int r, {
+    required bool dilate,
+    required bool horizontal,
+  }) {
+    final out = List<bool>.filled(w * h, false);
+    final lineLen = horizontal ? w : h;
+    final lines = horizontal ? h : w;
+    final prefix = List<int>.filled(lineLen + 1, 0);
+    for (int l = 0; l < lines; l++) {
+      for (int i = 0; i < lineLen; i++) {
+        final idx = horizontal ? l * w + i : i * w + l;
+        prefix[i + 1] = prefix[i] + (src[idx] ? 1 : 0);
+      }
+      for (int i = 0; i < lineLen; i++) {
+        final lo = max(0, i - r);
+        final hi = min(lineLen - 1, i + r);
+        final count = prefix[hi + 1] - prefix[lo];
+        final idx = horizontal ? l * w + i : i * w + l;
+        out[idx] = dilate ? count > 0 : count == (hi - lo + 1);
+      }
+    }
+    return out;
+  }
+
+  /// Keeps only the largest 8-connected blob; returns [binary] unchanged if
+  /// it is empty.
+  static List<bool> _keepLargestBlob(List<bool> binary, int w, int h) {
+    final label = List<int>.filled(w * h, 0);
+    final stack = <int>[];
+    int bestLabel = 0;
+    int bestSize = 0;
+    int next = 0;
+    for (int s = 0; s < binary.length; s++) {
+      if (!binary[s] || label[s] != 0) continue;
+      next++;
+      int size = 0;
+      label[s] = next;
+      stack.add(s);
+      while (stack.isNotEmpty) {
+        final p = stack.removeLast();
+        size++;
+        final px = p % w;
+        final py = p ~/ w;
+        for (int dy = -1; dy <= 1; dy++) {
+          for (int dx = -1; dx <= 1; dx++) {
+            if (dx == 0 && dy == 0) continue;
+            final nx = px + dx;
+            final ny = py + dy;
+            if (nx < 0 || ny < 0 || nx >= w || ny >= h) continue;
+            final n = ny * w + nx;
+            if (binary[n] && label[n] == 0) {
+              label[n] = next;
+              stack.add(n);
+            }
+          }
+        }
+      }
+      if (size > bestSize) {
+        bestSize = size;
+        bestLabel = next;
+      }
+    }
+    if (bestLabel == 0) return binary;
+    return List<bool>.generate(binary.length, (i) => label[i] == bestLabel);
+  }
+
+  /// Moore-neighbor walk around the first blob in [binary] (callers pass a
+  /// grid that has already been reduced to the largest blob).
   static List<List<int>>? _traceOuterContour(List<bool> binary, int w, int h) {
     bool at(int x, int y) {
       if (x < 0 || y < 0 || x >= w || y >= h) return false;

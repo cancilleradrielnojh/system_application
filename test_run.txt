@@ -1,0 +1,175 @@
+﻿00:00 +0: loading C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart
+00:00 +0: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-01 renders profile card and all settings rows
+00:01 +1: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/app_theme_mode_test.dart: TC-AL-05 MaterialApp themeMode follows themeNotifier
+00:01 +2: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/app_theme_mode_test.dart: TC-AL-05 MaterialApp themeMode follows themeNotifier
+00:02 +3: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/app_theme_mode_test.dart: TC-AL-05 MaterialApp themeMode follows themeNotifier
+00:02 +4: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/app_widgets_test.dart: TC-AW-01 LimeCta shows label + icon and fires onTap once
+00:02 +5: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-01 empty history shows the empty state only
+00:02 +6: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-01 empty history shows the empty state only
+00:02 +7: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-01 empty history shows the empty state only
+00:02 +8: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-01 empty history shows the empty state only
+00:02 +9: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-01 empty history shows the empty state only
+00:02 +10: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-01 empty history shows the empty state only
+00:02 +11: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-05 Clear All App Data: Cancel changes nothing
+00:02 +12: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-05 Clear All App Data: Cancel changes nothing
+00:02 +13: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-02 scans are grouped under Today / Yesterday headers
+00:02 +14: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-02 scans are grouped under Today / Yesterday headers
+00:02 +15: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-02 scans are grouped under Today / Yesterday headers
+00:03 +16: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-02 scans are grouped under Today / Yesterday headers
+00:03 +17: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-07 Support & Help opens the help screen
+00:03 +18: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-07 Support & Help opens the help screen
+00:03 +19: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-07 Support & Help opens the help screen
+00:03 +20: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/history_page_test.dart: TC-HI-05 expanding a card lists per-sapling recommendations
+00:04 +21: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-08 Profile Settings opens pre-filled with the name
+00:04 +22: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-08 Profile Settings opens pre-filled with the name
+00:04 +23: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-01 shows greeting with the user name, brand and CTA
+00:04 +24: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-01 shows greeting with the user name, brand and CTA
+00:05 +25: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/notification_service_test.dart: TC-NS-01 failed scan shows a red failure banner
+00:05 +26: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/notification_service_test.dart: TC-NS-01 failed scan shows a red failure banner
+00:05 +27: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/notification_service_test.dart: TC-NS-01 failed scan shows a red failure banner
+00:05 +28: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/account_settings_test.dart: TC-AS-09 Profile save: empty name rejected, valid name saved
+00:05 +29: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-03 counters reflect today vs all-time scans
+00:05 +30: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/notification_service_test.dart: TC-NS-02 single class: count + class name, green for Healthy
+00:05 +31: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-04 recent scans list is capped at 3 and shows details
+00:05 +32: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-04 recent scans list is capped at 3 and shows details
+00:05 +33: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/notification_service_test.dart: TC-NS-04 yellowing uses amber, pest-damaged uses red
+00:05 +34: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-05 "See all" switches to the History tab
+00:05 +35: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-05 "See all" switches to the History tab
+00:05 +36: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-05 "See all" switches to the History tab
+00:06 +37: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-05 "See all" switches to the History tab
+00:06 +38: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-05 "See all" switches to the History tab
+00:06 +39: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-05 "See all" switches to the History tab
+00:06 +40: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/home_screen_test.dart: TC-HM-06 bottom navigation opens History, Statistics, Settings
+00:07 +41: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/result_screen_test.dart: TC-RS-01 failed analysis shows the error sheet
+00:07 +42: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/result_screen_test.dart: TC-RS-01 failed analysis shows the error sheet
+00:07 +43: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/result_screen_test.dart: TC-RS-01 failed analysis shows the error sheet
+00:07 +44: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/result_screen_test.dart: TC-RS-01 failed analysis shows the error sheet
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SpaceGrotesk-Regular was not found in the application assets. Ensure SpaceGrotesk-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font DMSans-Regular was not found in the application assets. Ensure DMSans-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font SpaceGrotesk-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SpaceGrotesk-SemiBold was not found in the application assets. Ensure SpaceGrotesk-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font DMSans-SemiBold was not found in the application assets. Ensure DMSans-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:08 +45: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-01 shows title, Capture and gallery controls
+Camera error: CameraException(CameraAccessDenied, denied)
+00:08 +46: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/statistic_screen_test.dart: TC-ST-01 empty database shows the "no scans" state
+00:08 +46: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-02 camera permission denied shows the permission message
+Camera error: CameraException(CameraAccessDenied, denied)
+00:08 +46: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/result_screen_test.dart: TC-RS-02 error sheet offers Try Again and no Done/Scan New
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SpaceGrotesk-Regular was not found in the application assets. Ensure SpaceGrotesk-Regular.ttf exists in a folder that is included in your pubspec's assets.
+00:08 +47: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/statistic_screen_test.dart: TC-ST-01 empty database shows the "no scans" state
+00:08 +47: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/result_screen_test.dart: TC-RS-02 error sheet offers Try Again and no Done/Scan New
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font DMSans-Regular was not found in the application assets. Ensure DMSans-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font DMSans-SemiBold was not found in the application assets. Ensure DMSans-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:08 +48: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/statistic_screen_test.dart: TC-ST-01 empty database shows the "no scans" state
+00:09 +48: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-03 permission denied without prompt / restricted too
+Camera error: CameraException(CameraAccessDeniedWithoutPrompt, denied)
+Camera error: CameraException(CameraAccessRestricted, denied)
+00:09 +49: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/statistic_screen_test.dart: TC-ST-01 empty database shows the "no scans" state
+00:09 +49: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-04 other camera errors show the error description
+Camera error: CameraException(CameraNotAvailable, sensor busy)
+00:09 +50: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/statistic_screen_test.dart: TC-ST-01 empty database shows the "no scans" state
+00:09 +50: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-05 device with no cameras shows a generic message
+Camera error: Bad state: No element
+00:09 +51: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/statistic_screen_test.dart: TC-ST-01 empty database shows the "no scans" state
+00:09 +51: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-06 no live overlay or capture frame without a camera
+Camera error: CameraException(CameraAccessDenied, denied)
+00:09 +52: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/statistic_screen_test.dart: TC-ST-01 empty database shows the "no scans" state
+00:09 +53: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/result_screen_test.dart: TC-RS-03 Try Again closes the screen and returns null
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SpaceGrotesk-Regular was not found in the application assets. Ensure SpaceGrotesk-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font DMSans-Regular was not found in the application assets. Ensure DMSans-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font DMSans-SemiBold was not found in the application assets. Ensure DMSans-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:09 +54: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:09 +55: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:09 +55: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-07 Capture is a no-op while the camera is not ready
+Camera error: CameraException(CameraAccessDenied, denied)
+00:09 +56: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:09 +56: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-08 cancelled gallery pick returns to the camera screen
+Camera error: CameraException(CameraAccessDenied, denied)
+Camera error: CameraException(CameraAccessDenied, denied)
+00:09 +57: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:09 +57: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/result_screen_test.dart: TC-RS-04 result screen has no implicit back button
+Error: google_fonts was unable to load font SpaceGrotesk-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font SpaceGrotesk-Regular was not found in the application assets. Ensure SpaceGrotesk-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-Regular because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font DMSans-Regular was not found in the application assets. Ensure DMSans-Regular.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+Error: google_fonts was unable to load font DMSans-SemiBold because the following exception occurred:
+Exception: GoogleFonts.config.allowRuntimeFetching is false but font DMSans-SemiBold was not found in the application assets. Ensure DMSans-SemiBold.ttf exists in a folder that is included in your pubspec's assets.
+
+There is likely something wrong with your test. Please see https://github.com/flutter/packages/blob/main/packages/google_fonts/example/test for examples of how to test with google_fonts.
+If troubleshooting doesn't solve the problem, please file an issue at https://github.com/flutter/flutter/issues/new/choose.
+
+00:09 +58: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:09 +59: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:10 +59: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/scanner_screen_test.dart: TC-SC-09 resuming the app retries camera initialisation
+Camera error: CameraException(CameraAccessDenied, denied)
+Camera error: CameraException(CameraAccessDenied, denied)
+00:10 +60: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:10 +61: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:10 +62: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:10 +63: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-01 renders brand, tagline, name field and button
+00:10 +64: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-02 empty name is rejected (no navigation, nothing saved)
+00:10 +65: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/user_verificaiton_test.dart: TC-UV-03 whitespace-only name is rejected
+00:11 +66: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/widget_test.dart: TC-AL-01 first launch (no saved name) opens UserVerification
+00:11 +67: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/widget_test.dart: TC-AL-01 first launch (no saved name) opens UserVerification
+00:11 +68: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/widget_test.dart: TC-AL-01 first launch (no saved name) opens UserVerification
+00:12 +69: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/widget_test.dart: TC-AL-02 returning user (saved name) goes straight to Home
+00:12 +70: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/widget_test.dart: TC-AL-03 loading spinner is gone once the user is resolved
+00:12 +71: C:/Users/lenovo/Desktop/SYSTEM_2.0 (CAPSTONE_WITH_AUTO_DETECTION/system_application/test/widget_test.dart: TC-AL-04 debug banner is hidden
+00:12 +72: All tests passed!

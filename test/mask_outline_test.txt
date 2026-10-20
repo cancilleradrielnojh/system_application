@@ -1,0 +1,79 @@
+import 'package:flutter_test/flutter_test.dart';
+import 'package:system_application/detection/inference_service.dart';
+
+/// Synthetic 40x40 proto mask. Output coordinates are in 640px model input
+/// space, so one proto cell = 16 px.
+List<double> _mask(void Function(List<double> m, void Function(int x0, int y0, int x1, int y1, double v) fill) build) {
+  const n = 40;
+  final m = List<double>.filled(n * n, 0.05);
+  void fill(int x0, int y0, int x1, int y1, double v) {
+    for (int y = y0; y <= y1; y++) {
+      for (int x = x0; x <= x1; x++) {
+        m[y * n + x] = v;
+      }
+    }
+  }
+
+  build(m, fill);
+  return m;
+}
+
+List<double> _bounds(List<List<double>> poly) {
+  var minX = double.infinity, minY = double.infinity;
+  var maxX = -double.infinity, maxY = -double.infinity;
+  for (final p in poly) {
+    if (p[0] < minX) minX = p[0];
+    if (p[0] > maxX) maxX = p[0];
+    if (p[1] < minY) minY = p[1];
+    if (p[1] > maxY) maxY = p[1];
+  }
+  return [minX, minY, maxX, maxY];
+}
+
+List<List<double>>? _outline(List<double> sigs) =>
+    InferenceService.maskBoundaryPolygonForTest(
+      sigs: sigs,
+      bw: 40,
+      bh: 40,
+      protoW: 40,
+      protoH: 40,
+    );
+
+void main() {
+  test('outline joins two leaf clumps separated by a small gap', () {
+    final sigs = _mask((m, fill) {
+      fill(5, 5, 15, 30, 0.9); // left clump (found first when scanning)
+      fill(19, 10, 32, 28, 0.9); // right clump, 3-cell gap away
+    });
+    final poly = _outline(sigs)!;
+    final b = _bounds(poly);
+    expect(b[0], lessThan(7 * 16)); // reaches the left clump
+    expect(b[2], greaterThan(30 * 16)); // and the right clump
+  });
+
+  test('faint stem/shaded leaf (score 0.35-0.5) is now inside the outline', () {
+    final sigs = _mask((m, fill) {
+      fill(5, 5, 15, 30, 0.9);
+      fill(8, 31, 11, 38, 0.42); // thin stem, below 0.5 but above 0.35
+    });
+    final b = _bounds(_outline(sigs)!);
+    expect(b[3], greaterThan(36 * 16)); // reaches down the stem
+  });
+
+  test('a tiny far-away speck does not stretch the outline', () {
+    final sigs = _mask((m, fill) {
+      fill(5, 5, 15, 30, 0.9);
+      fill(36, 2, 37, 3, 0.9); // noise blob, far from the plant
+    });
+    final b = _bounds(_outline(sigs)!);
+    expect(b[2], lessThan(20 * 16));
+  });
+
+  test('a blob touching the box edge keeps its full extent', () {
+    final sigs = _mask((m, fill) {
+      fill(0, 10, 12, 25, 0.9);
+    });
+    final b = _bounds(_outline(sigs)!);
+    expect(b[0], lessThan(2 * 16));
+  });
+}
