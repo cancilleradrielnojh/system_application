@@ -1,3 +1,4 @@
+import 'dart:io' show Platform;
 import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
@@ -65,6 +66,10 @@ int normalizeSensorAngle(int sensorOrientation) {
   if (a >= 225 && a < 315) return 270;
   return 0;
 }
+
+/// 1 = fastest (single centre sample), 2 = 2x2 averaging (recommended, ~4x the
+/// per-pixel work), 3 = 3x3. Check the 'pre=' ms printed by the scanner.
+const int kLiveSupersample = 2;
 
 @pragma('vm:entry-point')
 void livePreprocessIsolateMain(SendPort handshake) {
@@ -135,7 +140,9 @@ Map<String, dynamic> preprocessOnePass(Map<String, dynamic> msg) {
     return <String, dynamic>{'ok': false};
   }
 
-  late final void Function(int cx, int cy, int offset) writeSample;
+  // One source sample -> sr/sg/sb (0..1). Returns false if outside the buffer.
+  double sr = 0, sg = 0, sb = 0;
+  late final bool Function(int cx, int cy) readSample;
   if (format == 'bgra8888') {
     final bytes = planes.first;
     final meta = planeMeta.first;
@@ -144,12 +151,13 @@ Map<String, dynamic> preprocessOnePass(Map<String, dynamic> msg) {
     // metadata: iOS reports bytesPerPixel as null, and the worker turns null
     // into 1, which made the sampler step 1 byte per pixel (a smeared image).
     const bpp = 4;
-    writeSample = (cx, cy, offset) {
+    readSample = (cx, cy) {
       final i = cy * rowStride + cx * bpp;
-      if (i + 2 >= bytes.length) return;
-      data[offset] = bytes[i + 2] / 255.0;
-      data[planeSize + offset] = bytes[i + 1] / 255.0;
-      data[2 * planeSize + offset] = bytes[i] / 255.0;
+      if (i + 2 >= bytes.length) return false;
+      sr = bytes[i + 2] / 255.0;
+      sg = bytes[i + 1] / 255.0;
+      sb = bytes[i] / 255.0;
+      return true;
     };
   } else if (format == 'yuv420') {
     if (planes.length < 3) {
@@ -161,53 +169,73 @@ Map<String, dynamic> preprocessOnePass(Map<String, dynamic> msg) {
     final yRowStride = planeMeta[0]['bytesPerRow'] as int;
     final uvRowStride = planeMeta[1]['bytesPerRow'] as int;
     final uvPixelStride = (planeMeta[1]['bytesPerPixel'] as int?) ?? 1;
-    writeSample = (cx, cy, offset) {
+    readSample = (cx, cy) {
       final yi = cy * yRowStride + cx;
-      if (yi >= yBytes.length) return;
+      if (yi >= yBytes.length) return false;
       final uvi = (cy >> 1) * uvRowStride + (cx >> 1) * uvPixelStride;
-      if (uvi >= uBytes.length || uvi >= vBytes.length) return;
+      if (uvi >= uBytes.length || uvi >= vBytes.length) return false;
       final yVal = yBytes[yi].toDouble();
       final uVal = uBytes[uvi].toDouble() - 128.0;
       final vVal = vBytes[uvi].toDouble() - 128.0;
-      final r = (yVal + 1.402 * vVal).clamp(0.0, 255.0) / 255.0;
-      final g =
-          (yVal - 0.344136 * uVal - 0.714136 * vVal).clamp(0.0, 255.0) / 255.0;
-      final b = (yVal + 1.772 * uVal).clamp(0.0, 255.0) / 255.0;
-      data[offset] = r;
-      data[planeSize + offset] = g;
-      data[2 * planeSize + offset] = b;
+      sr = (yVal + 1.402 * vVal).clamp(0.0, 255.0) / 255.0;
+      sg = (yVal - 0.344136 * uVal - 0.714136 * vVal).clamp(0.0, 255.0) / 255.0;
+      sb = (yVal + 1.772 * uVal).clamp(0.0, 255.0) / 255.0;
+      return true;
     };
   } else {
     return <String, dynamic>{'ok': false};
   }
 
+  // Each output pixel averages ss x ss source samples spread across the source
+  // area it covers (like the area/bilinear resize used when the training
+  // images were prepared). Plain nearest-neighbour picked ONE source pixel and
+  // aliased, so the model input changed from frame to frame even on a still
+  // scene, which made scores jitter around the confidence gate.
+  // Android devices are slow here (1.2-1.5 s per live result), so use the cheap
+  // single centre sample there until preprocessing time has been measured.
+  final int ss = Platform.isAndroid ? 1 : (kLiveSupersample < 1 ? 1 : kLiveSupersample);
+  final int ssDen = 2 * ss;
   for (int dy = 0; dy < nh; dy++) {
-    final uy = (dy * uprightH) ~/ nh;
-    final destY = padYi + dy;
-    final rowOff = destY * inputSize;
+    final rowOff = (padYi + dy) * inputSize;
     for (int dx = 0; dx < nw; dx++) {
-      final ux = (dx * uprightW) ~/ nw;
-      late final int cx;
-      late final int cy;
-      switch (angle) {
-        case 90:
-          cx = uy;
-          cy = height - 1 - ux;
-          break;
-        case 270:
-          cx = width - 1 - uy;
-          cy = ux;
-          break;
-        case 180:
-          cx = width - 1 - ux;
-          cy = height - 1 - uy;
-          break;
-        default:
-          cx = ux;
-          cy = uy;
+      double ar = 0, ag = 0, ab = 0;
+      int n = 0;
+      for (int oy = 0; oy < ss; oy++) {
+        final int uy = ((dy * ssDen + 2 * oy + 1) * uprightH) ~/ (nh * ssDen);
+        for (int ox = 0; ox < ss; ox++) {
+          final int ux = ((dx * ssDen + 2 * ox + 1) * uprightW) ~/ (nw * ssDen);
+          late final int cx;
+          late final int cy;
+          switch (angle) {
+            case 90:
+              cx = uy;
+              cy = height - 1 - ux;
+              break;
+            case 270:
+              cx = width - 1 - uy;
+              cy = ux;
+              break;
+            case 180:
+              cx = width - 1 - ux;
+              cy = height - 1 - uy;
+              break;
+            default:
+              cx = ux;
+              cy = uy;
+          }
+          if (cx < 0 || cy < 0 || cx >= width || cy >= height) continue;
+          if (!readSample(cx, cy)) continue;
+          ar += sr;
+          ag += sg;
+          ab += sb;
+          n++;
+        }
       }
-      if (cx < 0 || cy < 0 || cx >= width || cy >= height) continue;
-      writeSample(cx, cy, rowOff + padXi + dx);
+      if (n == 0) continue;
+      final int o = rowOff + padXi + dx;
+      data[o] = ar / n;
+      data[planeSize + o] = ag / n;
+      data[2 * planeSize + o] = ab / n;
     }
   }
 

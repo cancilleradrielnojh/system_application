@@ -1,4 +1,5 @@
 // ========================= lib/main.dart =========================
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,10 +11,17 @@ import 'profile_settings/notification_service.dart';
 import 'detection/inference_service.dart';
 import 'theme/app_theme.dart';
 
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await inferenceService.loadModel();
+  // Show the app immediately. The ONNX models load in the background: waiting
+  // for them here left the app stuck on the launch screen whenever loading was
+  // slow or failed (an uncaught error before runApp never shows anything).
   runApp(const MyApp());
+  unawaited(
+    inferenceService.loadModel().catchError((Object e) {
+      debugPrint('Background model load failed: $e');
+    }),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -37,13 +45,20 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> loadUser() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedName = prefs.getString('username');
-
-    if (savedName != null) {
-      nameNotifier.value = savedName;
+    String? savedName;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      savedName = prefs.getString('username');
+      if (savedName != null) {
+        nameNotifier.value = savedName;
+      }
+    } catch (e) {
+      // Never leave the app on the loading spinner because saved settings
+      // could not be read: continue as a first-time user instead.
+      debugPrint('Could not read saved name: $e');
     }
 
+    if (!mounted) return;
     setState(() {
       name      = savedName;
       isLoading = false;
@@ -62,15 +77,14 @@ class _MyAppState extends State<MyApp> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: 56,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: AppColors.ink,
-                    borderRadius: BorderRadius.circular(16),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    width: 80,
+                    height: 80,
+                    fit: BoxFit.cover,
                   ),
-                  child: const Icon(Icons.spa_rounded,
-                      color: AppColors.lime, size: 28),
                 ),
                 const SizedBox(height: 20),
                 const SizedBox(

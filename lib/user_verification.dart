@@ -38,8 +38,13 @@ class _UserVerificationState extends State<UserVerification>
   Future<void> saveName() async {
     if (controller.text.trim().isEmpty) return;
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('username', controller.text.trim());
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('username', controller.text.trim());
+    } catch (e) {
+      // Saving can fail on a broken release build; still let the user in.
+      debugPrint('Could not save name: $e');
+    }
 
     if (!mounted) return;
 

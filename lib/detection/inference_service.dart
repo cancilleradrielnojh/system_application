@@ -61,6 +61,57 @@ class LiveFrameResult {
   });
 }
 
+/// One live-confirmed sapling, handed to the capture pipeline so the photo's
+/// result matches what the live view showed ("4 boxes live -> 4 results").
+///
+/// Coordinates are fractions (0..1) of the UPRIGHT camera frame, so they are
+/// independent of the live letterbox and of the captured photo's resolution.
+class LiveHint {
+  final double left, top, right, bottom;
+  final SaplingClass saplingClass;
+  final double confidence;
+
+  const LiveHint({
+    required this.left,
+    required this.top,
+    required this.right,
+    required this.bottom,
+    required this.saplingClass,
+    required this.confidence,
+  });
+
+  /// Converts the (tracker-smoothed) live detections into frame fractions.
+  static List<LiveHint> fromLiveResult(LiveFrameResult r) {
+    if (r.frameWidth <= 0 || r.frameHeight <= 0 || r.letterboxScale <= 0) {
+      return const [];
+    }
+    double nx(double v) =>
+        (((v - r.padX) / r.letterboxScale) / r.frameWidth).clamp(0.0, 1.0);
+    double ny(double v) =>
+        (((v - r.padY) / r.letterboxScale) / r.frameHeight).clamp(0.0, 1.0);
+
+    final out = <LiveHint>[];
+    for (final d in r.detections) {
+      if (d.bboxLeft == null ||
+          d.bboxTop == null ||
+          d.bboxRight == null ||
+          d.bboxBottom == null ||
+          d.saplingClass == null) {
+        continue;
+      }
+      final l = nx(d.bboxLeft!), t = ny(d.bboxTop!);
+      final rr = nx(d.bboxRight!), b = ny(d.bboxBottom!);
+      if (rr - l < 0.01 || b - t < 0.01) continue;
+      out.add(LiveHint(
+        left: l, top: t, right: rr, bottom: b,
+        saplingClass: d.saplingClass!,
+        confidence: d.confidence,
+      ));
+    }
+    return out;
+  }
+}
+
 /// Full analysis payload: detections + letterbox metadata for accurate overlays.
 class ImageAnalysisResult {
   final List<DetectionResult> detections;
@@ -182,22 +233,37 @@ class InferenceService {
   static const int inputSize = 640;
 
   // ── Confidence gates ──────────────────────────────────────────────────────
-  static const double confThreshold              = 0.70;
+  static const double confThreshold              = 0.50;
+  /// LIVE overlay only: per-frame floor. Kept low on purpose; LiveTracker
+  /// (detection/live_tracker.dart) decides what is actually shown, so a
+  /// plant hovering near a single hard threshold no longer flickers.
+  static const double liveCandidateThreshold     = 0.50;
+
+  /// LIVE boxes only. When one box lies mostly inside another (intersection /
+  /// smaller box area >= this) they are fused into their union, so fragments of
+  /// one sapling become one box. 1.0 = only fully nested boxes.
+  static const double liveMergeContainment       = 0.60;
+
+  /// LIVE boxes only: margin added on each side, as a fraction of box size, so
+  /// the box does not cut through the outer leaves.
+  static const double liveBoxPadFraction         = 0.05;
   /// Final keep gate on class score. Not a true species check 
-  static const double calamansiPresenceThreshold = 0.80;
+  static const double calamansiPresenceThreshold = 0.60;
 
   // Minimum confidence for a secondary class to be reported.
   static const double secondaryClassThreshold    = 0.60;
 
-   /// Same-class IoU suppress threshold (lower = keep more nearby leaves).
-  static const double iouThreshold = 0.15;
+  /// NMS suppresses a box when IoU with a higher-scoring kept box is ABOVE this
+  /// value, so a LOWER value deletes MORE boxes (0.15 deleted any neighbour that
+  /// overlapped a little). 0.5 keeps neighbouring plants/leaves separate.
+  static const double iouThreshold = 0.5;
   /// Cross-class suppress only when boxes almost completely overlap.
   static const double crossClassIouThreshold = 0.40;
 
   // ── Box geometry filters ──────────────────────────────────────────────────
-  static const double minBoxAreaPx   = 150;
+  static const double minBoxAreaPx   = 300;
   /// Cap oversized boxes that often swallow multiple adjacent leaves.
-  static const double maxBoxAreaPx   = 750000;
+  static const double maxBoxAreaPx   = 150000;
   static const double minSidePx      = 5;
   static const double maxSidePx      = 2048;
   static const double maxAspectRatio = 3.0;
@@ -210,15 +276,47 @@ class InferenceService {
   /// Used ONLY to draw the outline (not to accept/reject a detection, which
   /// still uses [maskBinaryThreshold]). Lower so shaded leaves and thin
   /// stems are not dropped from the silhouette.
-  static const double maskOutlineThreshold       = 0.0015;
+  static const double maskOutlineThreshold       = 0.005;
 
   /// Gaps of up to about 2x this many pixels (on the 3x upsampled outline
   /// grid, i.e. roughly 4 input pixels each) between pieces of the plant are
   /// bridged so they form one outline.
-  static const int    outlineCloseRadius         = 4;
+  static const int    outlineCloseRadius         = 2;
 
   // ── Blur detection ────────────────────────────────────────────────
   static const double blurThreshold = 80.0;
+
+  // ── Live -> capture alignment ─────────────────────────────────────────────
+  /// A live result older than this at the moment of the capture tap is not
+  /// trusted (the camera has probably moved), so the photo is analysed on its
+  /// own as before.
+  static const Duration liveHintMaxAge = Duration(milliseconds: 2500);
+  /// Class-score floor for matching a live box to a box in the photo. Lower
+  /// than [calamansiPresenceThreshold] on purpose: the live tracker already
+  /// confirmed this plant over several frames.
+  static const double hintCandidateFloor = 0.25;
+  /// Last-resort floor used to read a class off the anchor that sits inside a
+  /// live box when no photo box matched it.
+  static const double hintFallbackFloor  = 0.05;
+  /// Minimum IoU for a live box and a photo box to be the same plant (a box
+  /// whose centre lies inside the other also counts).
+  static const double hintMatchIou       = 0.15;
+
+  String?         _hintPath;
+  List<LiveHint>  _hints = const [];
+
+  /// Called by the scanner right after `takePicture()`. The hints belong to
+  /// that exact file; [analyzeImage] ignores them for any other path.
+  void setLiveHints(String imagePath, List<LiveHint> hints) {
+    _hintPath = imagePath;
+    _hints    = hints;
+  }
+
+  /// Gallery uploads and stale live results: analyse the image on its own.
+  void clearLiveHints() {
+    _hintPath = null;
+    _hints    = const [];
+  }
 
   /// Full model (boxes + 32x160x160 mask prototypes). Used by capture/gallery.
   OrtSession? _session;
@@ -247,27 +345,43 @@ class InferenceService {
 
   // ── loadModel ─────────────────────────────────────────────────────────────
 
-  Future<void> loadModel() async {
-    if (_isLoaded) return;
+  Future<void>? _loading;
+
+  /// Last load failure, or null. Cleared when a later load succeeds.
+  Object? loadError;
+
+  /// Loads both models once. Concurrent callers share the same load, and a
+  /// failed load can simply be called again.
+  Future<void> loadModel() {
+    if (_isLoaded) return Future<void>.value();
+    return _loading ??= _doLoadModel().whenComplete(() => _loading = null);
+  }
+
+  static const Duration _loadTimeout = Duration(seconds: 90);
+
+  Future<void> _doLoadModel() async {
     try {
       final ort = OnnxRuntime();
       try {
         debugPrint('ORT available providers: '
             '${await ort.getAvailableProviders()}');
       } catch (_) {}
-      _session = await _createSession(ort, 'assets/models/best_flutter.onnx');
+      _session = await _createSession(ort, 'assets/models/best_flutter.onnx')
+          .timeout(_loadTimeout);
       try {
         _liveSession = await _createSession(
           ort,
           'assets/models/best_flutter_live_det.onnx',
-        );
+        ).timeout(_loadTimeout);
       } catch (e) {
         debugPrint('Live det-only model unavailable ($e); using full model.');
         _liveSession = null;
       }
       _isLoaded = true;
+      loadError = null;
       debugPrint('✅ ONNX segmentation model loaded');
     } catch (e) {
+      loadError = e;
       debugPrint('❌ Model load failed: $e');
       rethrow;
     }
@@ -431,14 +545,25 @@ class InferenceService {
     List rawDet,
     List<int> detShape,
   ) {
-    const numClasses  = 4;
-    const numMaskCoef = 32;
-    const rows        = 4 + numClasses + numMaskCoef; // 40
+    const numClasses = 4;
+    // Detection-only live model: 4 box rows + 4 class scores = 8 rows.
+    // If that asset is missing and the full model is used instead, it has
+    // 40 rows (4 + 4 + 32 mask coefficients); both layouts are accepted.
+    const int detOnlyRows = 4 + numClasses;
+    const int fullRows    = 4 + numClasses + 32;
 
     if (detShape.length != 3) return const [];
 
+    final int rows;
+    if (detShape[1] == detOnlyRows || detShape[2] == detOnlyRows) {
+      rows = detOnlyRows;
+    } else if (detShape[1] == fullRows || detShape[2] == fullRows) {
+      rows = fullRows;
+    } else {
+      return const [];
+    }
+
     final bool rowFirst = detShape[1] == rows;
-    if (!rowFirst && detShape[2] != rows) return const [];
 
     final int numAnchors = rowFirst ? detShape[2] : detShape[1];
     if (numAnchors <= 0) return const [];
@@ -513,7 +638,7 @@ class InferenceService {
         }
       }
 
-      if (maxScore >= confThreshold) {
+      if (maxScore >= liveCandidateThreshold) {
         nConf++;
         candidates.add(_Candidate(
           cx: cxU, cy: cyU, w: wAbs, h: hAbs,
@@ -532,7 +657,7 @@ class InferenceService {
       return const [];
     }
 
-    final kept = _nms(candidates);
+    final kept = _mergeNested(_nms(candidates));
     if (kept.isEmpty) {
       stat(0, 0);
       return const [];
@@ -540,12 +665,14 @@ class InferenceService {
 
     final results = <DetectionResult>[];
     for (final c in kept) {
-      if (c.confidence < calamansiPresenceThreshold) continue;
+      if (c.confidence < liveCandidateThreshold) continue;
 
-      final double x1 = (c.cx - c.w / 2).clamp(0.0, inputSize - 1);
-      final double y1 = (c.cy - c.h / 2).clamp(0.0, inputSize - 1);
-      final double x2 = (c.cx + c.w / 2).clamp(0.0, inputSize - 1);
-      final double y2 = (c.cy + c.h / 2).clamp(0.0, inputSize - 1);
+      final double padW = c.w * liveBoxPadFraction;
+      final double padH = c.h * liveBoxPadFraction;
+      final double x1 = (c.cx - c.w / 2 - padW).clamp(0.0, inputSize - 1);
+      final double y1 = (c.cy - c.h / 2 - padH).clamp(0.0, inputSize - 1);
+      final double x2 = (c.cx + c.w / 2 + padW).clamp(0.0, inputSize - 1);
+      final double y2 = (c.cy + c.h / 2 + padH).clamp(0.0, inputSize - 1);
 
       results.add(DetectionResult(
         saplingClass: _toEnum(c.classIndex),
@@ -573,8 +700,13 @@ class InferenceService {
   // ── analyzeImage ──────────────────────────────────────────────────────────
 
   Future<ImageAnalysisResult> analyzeImage(String imagePath) async {
+    // The model loads in the background after start-up: wait for it instead of
+    // failing if the user captures a photo very early.
     if (!_isLoaded || _session == null) {
-      throw Exception('Model not loaded. Call loadModel() first.');
+      await loadModel();
+    }
+    if (!_isLoaded || _session == null) {
+      throw Exception('Model not loaded${loadError != null ? ': $loadError' : ''}');
     }
 
     // Preprocess with EXIF rotation and blur check in isolate.
@@ -644,7 +776,21 @@ class InferenceService {
       await out.dispose();
     }
 
-    final detections = _decodeOutput(rawDet, detShape, rawProto, protoShape);
+    final hints = (_hintPath == imagePath) ? _hints : const <LiveHint>[];
+    final detections = hints.isEmpty
+        ? _decodeOutput(rawDet, detShape, rawProto, protoShape)
+        : _decodeWithHints(
+            rawDet:         rawDet,
+            detShape:       detShape,
+            rawProto:       rawProto,
+            protoShape:     protoShape,
+            hints:          hints,
+            imageWidth:     imageWidth,
+            imageHeight:    imageHeight,
+            letterboxScale: letterboxScale,
+            padX:           padX,
+            padY:           padY,
+          );
     return ImageAnalysisResult(
       detections: detections,
       imageWidth: imageWidth,
@@ -806,6 +952,245 @@ class InferenceService {
     return results.length > maxDetectionsToReturn
         ? results.sublist(0, maxDetectionsToReturn)
         : results;
+  }
+
+  // ── _collectCandidates / _decodeWithHints ─────────────────────────────────
+
+  /// Same anchor scan and geometry filters as [_decodeOutput], but with a
+  /// caller-chosen score floor. Returns null when the output layout is not the
+  /// full 40-row segmentation head.
+  static List<_Candidate>? _collectCandidates(
+    List<double> rawDet,
+    List<int>    detShape,
+    double       minScore,
+  ) {
+    const numClasses = 4;
+    const rows       = 4 + numClasses + 32;
+    if (detShape.length != 3) return null;
+    final bool rowFirst = detShape[1] == rows;
+    if (!rowFirst && detShape[2] != rows) return null;
+    final int numAnchors = rowFirst ? detShape[2] : detShape[1];
+    if (numAnchors <= 0) return null;
+
+    int idx(int row, int anchor) =>
+        rowFirst ? row * numAnchors + anchor : anchor * rows + row;
+
+    final out = <_Candidate>[];
+    for (int i = 0; i < numAnchors; i++) {
+      final double cx = rawDet[idx(0, i)];
+      final double cy = rawDet[idx(1, i)];
+      final double w  = rawDet[idx(2, i)];
+      final double h  = rawDet[idx(3, i)];
+
+      final bool norm =
+          (w <= 1.0 && h <= 1.0 && cx.abs() <= 1.0 && cy.abs() <= 1.0);
+      final double cxU = norm ? cx * inputSize : cx;
+      final double cyU = norm ? cy * inputSize : cy;
+      final double wAbs = (norm ? w * inputSize : w).abs();
+      final double hAbs = (norm ? h * inputSize : h).abs();
+
+      final double areaPx = wAbs * hAbs;
+      if (areaPx < minBoxAreaPx || areaPx > maxBoxAreaPx) continue;
+      if (wAbs < minSidePx || wAbs > maxSidePx) continue;
+      if (hAbs < minSidePx || hAbs > maxSidePx) continue;
+      if (max(wAbs, hAbs) / min(wAbs, hAbs) > maxAspectRatio) continue;
+
+      double best = 0, second = 0;
+      int bestC = 0, secondC = 0;
+      for (int c = 0; c < numClasses; c++) {
+        final score = rawDet[idx(4 + c, i)];
+        if (score > best) {
+          second = best; secondC = bestC;
+          best = score;  bestC = c;
+        } else if (score > second) {
+          second = score; secondC = c;
+        }
+      }
+      if (best < minScore) continue;
+
+      out.add(_Candidate(
+        cx: cxU, cy: cyU, w: wAbs, h: hAbs,
+        confidence: best, classIndex: bestC,
+        areaPx: areaPx, anchorIndex: i,
+        secondaryScore: second, secondaryClass: secondC,
+      ));
+    }
+    return out;
+  }
+
+  static bool _inBox(List<double> b, double x, double y) =>
+      x >= b[0] && x <= b[2] && y >= b[1] && y <= b[3];
+
+  static double _iouBox(List<double> b, _Candidate c) {
+    final ix1 = max(b[0], c.cx - c.w / 2), ix2 = min(b[2], c.cx + c.w / 2);
+    final iy1 = max(b[1], c.cy - c.h / 2), iy2 = min(b[3], c.cy + c.h / 2);
+    if (ix2 <= ix1 || iy2 <= iy1) return 0;
+    final inter = (ix2 - ix1) * (iy2 - iy1);
+    final union = (b[2] - b[0]) * (b[3] - b[1]) + c.w * c.h - inter;
+    return union <= 0 ? 0 : inter / union;
+  }
+
+  /// Builds a [DetectionResult] (with outline when the mask is usable) from a
+  /// candidate. Unlike [_decodeOutput] a weak mask does NOT drop the plant.
+  static DetectionResult _candidateToDetection(
+    _Candidate   c,
+    List<double> rawDet,
+    List<int>    detShape,
+    List<double> rawProto,
+    List<int>    protoShape,
+  ) {
+    final maskEval = _evaluateMask(
+      best: c, rawDet: rawDet, rawProto: rawProto,
+      detShape: detShape, protoShape: protoShape,
+    );
+    SaplingClass? secondaryClass;
+    double?       secondaryConfidence;
+    if (c.secondaryScore >= secondaryClassThreshold &&
+        c.secondaryClass != c.classIndex) {
+      secondaryClass      = _toEnum(c.secondaryClass);
+      secondaryConfidence = c.secondaryScore;
+    }
+    return DetectionResult(
+      saplingClass:        _toEnum(c.classIndex),
+      confidence:          c.confidence,
+      boxAreaPx:           c.areaPx,
+      isCalamansi:         true,
+      secondaryClass:      secondaryClass,
+      secondaryConfidence: secondaryConfidence,
+      bboxLeft:   (c.cx - c.w / 2).clamp(0.0, inputSize - 1),
+      bboxTop:    (c.cy - c.h / 2).clamp(0.0, inputSize - 1),
+      bboxRight:  (c.cx + c.w / 2).clamp(0.0, inputSize - 1),
+      bboxBottom: (c.cy + c.h / 2).clamp(0.0, inputSize - 1),
+      maskPolygon: (maskEval != null && maskEval.ok) ? maskEval.polygon : null,
+    );
+  }
+
+  /// Capture analysis guided by the live view: returns EXACTLY one detection
+  /// (and therefore one classification) for every live-confirmed sapling.
+  ///
+  ///  1. Candidates are built at a relaxed floor and fused with the same NMS +
+  ///     nested-box merge the live view uses, so both sides count plants the
+  ///     same way.
+  ///  2. Each live box is paired 1:1 with the best-overlapping photo box.
+  ///  3. A live box with no photo box takes the strongest class score of any
+  ///     anchor centred inside it.
+  ///  4. If even that finds nothing, the live box and live class are kept.
+  /// Plants the live view never confirmed are not added.
+  static List<DetectionResult> _decodeWithHints({
+    required List<double>   rawDet,
+    required List<int>      detShape,
+    required List<double>   rawProto,
+    required List<int>      protoShape,
+    required List<LiveHint> hints,
+    required int            imageWidth,
+    required int            imageHeight,
+    required double         letterboxScale,
+    required double         padX,
+    required double         padY,
+  }) {
+    // Live boxes in the photo's 640x640 letterbox space.
+    final boxes = <List<double>>[
+      for (final h in hints)
+        [
+          padX + h.left   * imageWidth  * letterboxScale,
+          padY + h.top    * imageHeight * letterboxScale,
+          padX + h.right  * imageWidth  * letterboxScale,
+          padY + h.bottom * imageHeight * letterboxScale,
+        ],
+    ];
+
+    final pool = _collectCandidates(rawDet, detShape, hintCandidateFloor);
+    if (pool == null) {
+      // Unexpected output layout: fall back to the normal pipeline.
+      return _decodeOutput(rawDet, detShape, rawProto, protoShape);
+    }
+    final kept = pool.isEmpty ? <_Candidate>[] : _mergeNested(_nms(pool));
+
+    // Greedy 1:1 pairing, best overlap first.
+    final pairs = <List<double>>[]; // [hintIdx, candIdx, score]
+    for (int hi = 0; hi < boxes.length; hi++) {
+      final b = boxes[hi];
+      final hcx = (b[0] + b[2]) / 2, hcy = (b[1] + b[3]) / 2;
+      for (int ci = 0; ci < kept.length; ci++) {
+        final c = kept[ci];
+        final iou = _iouBox(b, c);
+        final candCenterInHint = _inBox(b, c.cx, c.cy);
+        final hintCenterInCand = (hcx - c.cx).abs() <= c.w / 2 &&
+                                 (hcy - c.cy).abs() <= c.h / 2;
+        if (iou >= hintMatchIou || candCenterInHint || hintCenterInCand) {
+          pairs.add([
+            hi.toDouble(),
+            ci.toDouble(),
+            iou + (candCenterInHint ? 0.25 : 0) + (hintCenterInCand ? 0.25 : 0),
+          ]);
+        }
+      }
+    }
+    pairs.sort((a, b) => b[2].compareTo(a[2]));
+
+    final matched = List<_Candidate?>.filled(boxes.length, null);
+    final usedCand = <int>{};
+    for (final p in pairs) {
+      final hi = p[0].toInt(), ci = p[1].toInt();
+      if (matched[hi] != null || usedCand.contains(ci)) continue;
+      matched[hi] = kept[ci];
+      usedCand.add(ci);
+    }
+
+    final usedAnchors = <int>{for (final i in usedCand) kept[i].anchorIndex};
+    List<_Candidate>? weak; // built lazily, only if some live box is unmatched
+    int nMatched = 0, nWeak = 0, nLive = 0;
+
+    final results = <DetectionResult>[];
+    for (int hi = 0; hi < boxes.length; hi++) {
+      var c = matched[hi];
+      if (c != null) {
+        nMatched++;
+      } else {
+        weak ??= _collectCandidates(rawDet, detShape, hintFallbackFloor) ??
+            <_Candidate>[];
+        _Candidate? best;
+        for (final w in weak) {
+          if (usedAnchors.contains(w.anchorIndex)) continue;
+          if (!_inBox(boxes[hi], w.cx, w.cy)) continue;
+          if (best == null || w.confidence > best.confidence) best = w;
+        }
+        if (best != null) {
+          c = best;
+          usedAnchors.add(best.anchorIndex);
+          nWeak++;
+        }
+      }
+
+      if (c != null) {
+        results.add(_candidateToDetection(
+            c, rawDet, detShape, rawProto, protoShape));
+      } else {
+        // Nothing in the photo scored here: keep what the live view saw.
+        final h = hints[hi], b = boxes[hi];
+        final w = b[2] - b[0], ht = b[3] - b[1];
+        results.add(DetectionResult(
+          saplingClass: h.saplingClass,
+          confidence:   h.confidence,
+          boxAreaPx:    w * ht,
+          isCalamansi:  true,
+          bboxLeft:   b[0].clamp(0.0, inputSize - 1),
+          bboxTop:    b[1].clamp(0.0, inputSize - 1),
+          bboxRight:  b[2].clamp(0.0, inputSize - 1),
+          bboxBottom: b[3].clamp(0.0, inputSize - 1),
+          maskPolygon: null,
+        ));
+        nLive++;
+      }
+    }
+
+    if (kDebugMode) {
+      debugPrint('Hinted decode: live=${hints.length} matched=$nMatched '
+          'weak=$nWeak liveOnly=$nLive photoBoxes=${kept.length}');
+    }
+
+    results.sort((a, b) => b.confidence.compareTo(a.confidence));
+    return results;
   }
 
   // ── _evaluateMask ─────────────────────────────────────────────────────────
@@ -1210,14 +1595,8 @@ class InferenceService {
     for (final c in list) {
       bool suppressed = false;
       for (final k in kept) {
-        final iou = _iou(c, k);
-        if (c.classIndex == k.classIndex) {
-          if (iou > iouThreshold) {
-            suppressed = true;
-            break;
-          }
-        } else if (iou > crossClassIouThreshold) {
-          // Only collapse near-identical boxes of different classes.
+        // Class-agnostic: one plant = one box, whatever class it scored.
+        if (_iou(c, k) > iouThreshold) {
           suppressed = true;
           break;
         }
@@ -1225,6 +1604,66 @@ class InferenceService {
       if (!suppressed) kept.add(c);
     }
     return kept;
+  }
+
+  // ── live box fusion ───────────────────────────────────────────────────────
+
+  /// Intersection area divided by the SMALLER box's area (1.0 = one box lies
+  /// fully inside the other). Plain IoU misses this case: a partial box inside
+  /// the bigger box of the same sapling has a low IoU, so NMS kept both and the
+  /// sapling was counted twice or drawn too small.
+  static double _containment(_Candidate a, _Candidate b) {
+    final ix1 = max(a.cx - a.w / 2, b.cx - b.w / 2);
+    final ix2 = min(a.cx + a.w / 2, b.cx + b.w / 2);
+    final iy1 = max(a.cy - a.h / 2, b.cy - b.h / 2);
+    final iy2 = min(a.cy + a.h / 2, b.cy + b.h / 2);
+    if (ix2 <= ix1 || iy2 <= iy1) return 0;
+    final inter   = (ix2 - ix1) * (iy2 - iy1);
+    final smaller = min(a.w * a.h, b.w * b.h);
+    return smaller <= 0 ? 0 : inter / smaller;
+  }
+
+  /// Bounding union of two candidates. [a] is the higher-scoring box and
+  /// supplies the class and confidence.
+  static _Candidate _unionCandidate(_Candidate a, _Candidate b) {
+    final x1 = min(a.cx - a.w / 2, b.cx - b.w / 2);
+    final x2 = max(a.cx + a.w / 2, b.cx + b.w / 2);
+    final y1 = min(a.cy - a.h / 2, b.cy - b.h / 2);
+    final y2 = max(a.cy + a.h / 2, b.cy + b.h / 2);
+    final w = x2 - x1;
+    final h = y2 - y1;
+    return _Candidate(
+      cx: (x1 + x2) / 2,
+      cy: (y1 + y2) / 2,
+      w: w,
+      h: h,
+      confidence:     a.confidence,
+      classIndex:     a.classIndex,
+      areaPx:         w * h,
+      anchorIndex:    a.anchorIndex,
+      secondaryScore: a.secondaryScore,
+      secondaryClass: a.secondaryClass,
+    );
+  }
+
+  /// Fuses nested boxes. Input is the NMS output (highest score first), so the
+  /// box at the lower index always wins class/confidence.
+  static List<_Candidate> _mergeNested(List<_Candidate> kept) {
+    final out = List<_Candidate>.from(kept);
+    var merged = true;
+    while (merged) {
+      merged = false;
+      for (var i = 0; i < out.length && !merged; i++) {
+        for (var j = i + 1; j < out.length && !merged; j++) {
+          if (_containment(out[i], out[j]) >= liveMergeContainment) {
+            out[i] = _unionCandidate(out[i], out[j]);
+            out.removeAt(j);
+            merged = true;
+          }
+        }
+      }
+    }
+    return out;
   }
 
   // ── _iou ──────────────────────────────────────────────────────────────────
@@ -1395,4 +1834,4 @@ double _laplacianVariance(img.Image grey) {
       .map((v) => (v - mean) * (v - mean))
       .reduce((a, b) => a + b) / values.length;
   return variance;
-} 
+}

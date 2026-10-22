@@ -2,6 +2,8 @@
 -keep class ai.onnxruntime.** { *; }
 -keepclassmembers class ai.onnxruntime.** { *; }
 -dontwarn ai.onnxruntime.**
+-keep class io.flutter.plugins.** { *; }
+-keepclassmembers class io.flutter.plugins.** { *; }
 
 # Keep Flutter
 -keep class io.flutter.** { *; }

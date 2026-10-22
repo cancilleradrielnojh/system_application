@@ -1,0 +1,124 @@
+// ========================= lib/data/database_service.dart =========================
+import 'dart:convert';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart' as p;
+
+class DatabaseService {
+  static Database? _db;
+
+  // ── Singleton DB accessor ─────────────────────────────────────────────────
+  static Future<Database> get database async {
+    _db ??= await _initDb();
+    return _db!;
+  }
+
+  static Future<Database> _initDb() async {
+    final dbPath = await getDatabasesPath();
+    final path   = p.join(dbPath, 'qlamansi.db');
+
+    return openDatabase(
+      path,
+      version: 1,
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE scans (
+            id              INTEGER PRIMARY KEY AUTOINCREMENT,
+            image           TEXT    NOT NULL DEFAULT '',
+            label           TEXT    NOT NULL DEFAULT '',
+            health          REAL    NOT NULL DEFAULT 0,
+            confidence      REAL    NOT NULL DEFAULT 0,
+            box_area_px     REAL    NOT NULL DEFAULT 0,
+            recommendation  TEXT    NOT NULL DEFAULT '',
+            detections      TEXT    NOT NULL DEFAULT '[]',
+            time            TEXT    NOT NULL DEFAULT ''
+          )
+        ''');
+      },
+    );
+  }
+
+  // ── Insert ────────────────────────────────────────────────────────────────
+  static Future<int> insertScan(Map<String, dynamic> scan) async {
+    final db  = await database;
+    final row = <String, dynamic>{
+      'image':          scan['image']          ?? '',
+      'label':          scan['label']          ?? '',
+      'health':         (scan['health']  as num?)?.toDouble() ?? 0.0,
+      'confidence':     (scan['confidence'] as num?)?.toDouble() ?? 0.0,
+      'box_area_px':    (scan['boxAreaPx'] as num?)?.toDouble() ?? 0.0,
+      'recommendation': scan['recommendation'] ?? '',
+      'detections':     scan['detections'] is List
+          ? jsonEncode(scan['detections'])
+          : (scan['detections'] as String? ?? '[]'),
+      'time':           scan['time']           ?? '',
+    };
+    return db.insert('scans', row);
+  }
+
+  // ── Read all ──────────────────────────────────────────────────────────────
+  static Future<List<Map<String, dynamic>>> getAllScans() async {
+    final db   = await database;
+    final rows = await db.query('scans', orderBy: 'time DESC');
+    return rows.map(_mapRow).toList();
+  }
+
+  // ── Read recent N ─────────────────────────────────────────────────────────
+  static Future<List<Map<String, dynamic>>> getRecentScans(int limit) async {
+    final db   = await database;
+    final rows = await db.query('scans', orderBy: 'time DESC', limit: limit);
+    return rows.map(_mapRow).toList();
+  }
+
+  // ── Counts ────────────────────────────────────────────────────────────────
+  static Future<int> countAll() async {
+    final db     = await database;
+    final result = await db.rawQuery('SELECT COUNT(*) AS cnt FROM scans');
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  static Future<int> countToday() async {
+    final db    = await database;
+    final today = DateTime.now();
+
+    // home.dart saves time as DateTime.now().toString():
+    //   e.g. "2026-04-03 14:30:00.123456"
+    // substr(time, 1, 10) slices exactly "2026-04-03" — reliable on all devices.
+    final dateStr =
+        '${today.year}-'
+        '${today.month.toString().padLeft(2, '0')}-'
+        '${today.day.toString().padLeft(2, '0')}';
+
+    final result = await db.rawQuery(
+      "SELECT COUNT(*) AS cnt FROM scans WHERE substr(time, 1, 10) = ?",
+      [dateStr],
+    );
+    return Sqflite.firstIntValue(result) ?? 0;
+  }
+
+  // ── Delete one ────────────────────────────────────────────────────────────
+  static Future<void> deleteScan(int id) async {
+    final db = await database;
+    await db.delete('scans', where: 'id = ?', whereArgs: [id]);
+  }
+
+  // ── Delete all ────────────────────────────────────────────────────────────
+  static Future<void> deleteAllScans() async {
+    final db = await database;
+    await db.delete('scans');
+  }
+
+  // ── Internal: row normaliser ──────────────────────────────────────────────
+  static Map<String, dynamic> _mapRow(Map<String, dynamic> row) {
+    final m = Map<String, dynamic>.from(row);
+    final raw = m['detections'];
+    if (raw is String) {
+      try {
+        m['detections'] = jsonDecode(raw) as List;
+      } catch (_) {
+        m['detections'] = <dynamic>[];
+      }
+    }
+    m['boxAreaPx'] = m['box_area_px'];
+    return m;
+  }
+}

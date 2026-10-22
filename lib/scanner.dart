@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'result_screen.dart';
 import 'detection/inference_service.dart';
+import 'detection/live_tracker.dart';
 import 'theme/app_theme.dart';
 import 'theme/app_widgets.dart';
 
@@ -57,14 +58,22 @@ class _ScannerScreenState extends State<ScannerScreen>
   int _frameSeq = 0;
   DateTime? _lastLiveDispatch;
 
-  Duration _liveInterval = const Duration(milliseconds: 1000);
-  static const Duration _minLiveInterval = Duration(milliseconds: 800);
-  static const Duration _maxLiveInterval = Duration(milliseconds: 1000);
+  static bool get _isIOS => defaultTargetPlatform == TargetPlatform.iOS;
 
-  // Brief hold so a single missed detection doesn't make boxes flicker off.
-  DateTime? _lastNonEmptyAt;
-  static const Duration _detectionHoldDuration = Duration(milliseconds: 200);
+  // Android: ~1 result/second cap. iPhone: faster, since it only needs ~250-300 ms.
+  // This is a speed limit, not a target: a new frame is never started while one
+  // is still running, so a slow phone simply runs as fast as it can.
+  Duration _liveInterval = Duration(milliseconds: _isIOS ? 300 : 1000);
+  static Duration get _minLiveInterval => Duration(milliseconds: _isIOS ? 250 : 800);
+  static Duration get _maxLiveInterval => Duration(milliseconds: _isIOS ? 400 : 1000);
+
+  // Per-object smoothing (match boxes between frames, confirm, hold, vote on class).
+  final LiveTracker _tracker = LiveTracker();
   DateTime? _lastAppliedDispatch;
+
+  /// When the overlay last received a result. At capture time this decides
+  /// whether the live boxes are fresh enough to guide the photo's analysis.
+  DateTime? _lastLiveResultAt;
 
   // ── Dev-only performance instrumentation (no-op in release builds) ─────
   final ValueNotifier<_LiveMetrics> _metricsNotifier =
@@ -259,22 +268,30 @@ class _ScannerScreenState extends State<ScannerScreen>
     }
   }
 
-  /// Lightweight temporal smoothing: a single frame with no detections
-  /// (e.g. a brief hand shake) doesn't immediately clear the overlay —
-  /// we hold the last detection for [_detectionHoldDuration] before
-  /// dropping to the empty state, which removes most flicker without any
-  /// heavier tracking logic.
+  /// Per-object temporal smoothing via [LiveTracker]: boxes are matched between
+  /// frames, a new plant must be seen on consecutive frames before it appears,
+  /// a shown plant survives a couple of missed frames, and its class is a vote
+  /// over recent frames. The count in the status pill is the number of tracks,
+  /// so it no longer jumps 3,2,3,4,2 on a still scene.
   void _updateLiveResult(LiveFrameResult result) {
-    if (result.detections.isNotEmpty) {
-      _lastNonEmptyAt = DateTime.now();
-      _liveResultNotifier.value = result;
-      return;
-    }
-    if (_lastNonEmptyAt != null &&
-        DateTime.now().difference(_lastNonEmptyAt!) < _detectionHoldDuration) {
-      return; // keep showing the still-recent previous result
-    }
-    _liveResultNotifier.value = result; // genuinely empty — clear overlay
+    _tracker.configureForLatency(result.totalMs);
+    final stable = _tracker.update(result.detections);
+    _lastLiveResultAt = DateTime.now();
+    _liveResultNotifier.value = LiveFrameResult(
+      detections:     stable,
+      frameWidth:     result.frameWidth,
+      frameHeight:    result.frameHeight,
+      letterboxScale: result.letterboxScale,
+      padX:           result.padX,
+      padY:           result.padY,
+      preprocessMs:   result.preprocessMs,
+      inferenceMs:    result.inferenceMs,
+      postprocessMs:  result.postprocessMs,
+      totalMs:        result.totalMs,
+      diag:           result.diag,
+      maxScore:       result.maxScore,
+      stats:          result.stats,
+    );
   }
 
   void _startMetricsTimer() {
@@ -337,6 +354,7 @@ class _ScannerScreenState extends State<ScannerScreen>
     controller = null;
     _liveBusy = false;
     _lastAppliedDispatch = null;
+    _lastLiveResultAt = null;
     _liveResultNotifier.value = null;
     if (mounted) setState(() => isCameraReady = false);
     if (cam != null) {
@@ -413,6 +431,19 @@ class _ScannerScreenState extends State<ScannerScreen>
 
   Future<void> captureImage() async {
     if (!isCameraReady || isProcessing) return;
+
+    // Snapshot what the live view is showing RIGHT NOW, before it is cleared,
+    // so the photo's result can match it (N live boxes -> N classifications).
+    // Freshness is judged at the moment of the tap, not after takePicture().
+    final LiveFrameResult? liveSnap = _liveResultNotifier.value;
+    final bool liveFresh = liveSnap != null &&
+        liveSnap.detections.isNotEmpty &&
+        _lastLiveResultAt != null &&
+        DateTime.now().difference(_lastLiveResultAt!) <=
+            InferenceService.liveHintMaxAge;
+    final List<LiveHint> hints =
+        liveFresh ? LiveHint.fromLiveResult(liveSnap) : const <LiveHint>[];
+
     setState(() {
       isProcessing = true;
     });
@@ -420,11 +451,18 @@ class _ScannerScreenState extends State<ScannerScreen>
     // photo-capture path; any in-flight live frame will see `isProcessing`
     // true when it completes and discard its result (see _runLiveInference).
     _liveResultNotifier.value = null;
-    _lastNonEmptyAt = null;
+    _tracker.reset();
     try {
       await _stopLiveStream();
       final image = await controller!.takePicture();
       if (!mounted) return;
+      // Bind the hints to this exact file; ResultScreen -> analyzeImage(path)
+      // picks them up with no change to ResultScreen.
+      if (hints.isNotEmpty) {
+        inferenceService.setLiveHints(image.path, hints);
+      } else {
+        inferenceService.clearLiveHints();
+      }
       await _openResultScreen(image.path);
     } catch (e) {
       debugPrint('Capture error: $e');
@@ -486,6 +524,8 @@ class _ScannerScreenState extends State<ScannerScreen>
   Future<void> uploadFromGallery() async {
     if (isProcessing) return;
     setState(() => isProcessing = true);
+    // A gallery photo was never seen by the live camera: analyse it alone.
+    inferenceService.clearLiveHints();
     try {
       final picked = await picker.pickImage(source: ImageSource.gallery);
       if (picked == null || !mounted) {
@@ -791,7 +831,7 @@ _CoverTransform _computeCoverTransform(Size previewSize, Size screenSize) {
   );
 }
 
-/// Draws the outline/box + "#number classification confidence%" label for
+/// Draws the outline/box + a "#number Calamansi Sapling" label for
 /// each sapling the live camera frame currently detects.
 class _LiveDetectionPainter extends CustomPainter {
   final LiveFrameResult? result;
@@ -876,8 +916,9 @@ class _LiveDetectionPainter extends CustomPainter {
         canvas.drawRect(rect, boxStroke);
       }
 
-      final label =
-          '#${i + 1} ${d.className}  ${(d.confidence * 100).toStringAsFixed(0)}%';
+      // Live view only shows that a sapling was found. The class and
+      // confidence are shown on the scan result screen, not here.
+      final label = '#${i + 1} Calamansi Sapling';
       final tp = TextPainter(
         text: TextSpan(
           text: label,

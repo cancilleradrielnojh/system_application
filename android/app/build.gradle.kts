@@ -18,10 +18,11 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) 
+        }
     }
-
     defaultConfig {
         applicationId = "com.example.system_application_v10"
         minSdk = flutter.minSdkVersion
@@ -30,18 +31,19 @@ android {
         versionName = flutter.versionName
     }
 
-    buildTypes {
-        release {
-            signingConfig = signingConfigs.getByName("debug")
-            isMinifyEnabled = true
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-}
+       buildTypes {
+           release {
+               signingConfig = signingConfigs.getByName("debug")
+               isMinifyEnabled = false
+               isShrinkResources = false
+               proguardFiles(
+                   getDefaultProguardFile("proguard-android-optimize.txt"),
+                   "proguard-rules.pro"
+               )
+           }
+       }
+   }
 
-flutter {
-    source = "../.."
-}
+   flutter {
+       source = "../.."
+   }
